@@ -1,0 +1,24 @@
+#+TITLE: Soumya Tripathy
+#+AUTHOR: Soumya Tripathy <soumya.tripathy@tuni.fi>
+#+EMAIL: soumya.tripathy@tuni.fi
+#+OPTIONS: email
+#+OPTIONS: num:nil
+
+* Introduction
+
+I am a Ph.D student in the Faculty of Computing and Electrical Engineering,  [[http://www.tuni.fi/en][Tampere University]]. I am working on computer vision under the supervision of Professor [[http://esa.rahtu.fi/][Esa Rahtu]] from Tampere University and Professor [[https://users.aalto.fi/~kannalj1/][Juho Kannala]] from [[http://www.aalto.fi/en/][Aalto University]].
+          Prior to coming to Finland, I was working as a Researcher at [[https://www.tcs.com/research-and-innovation][Tata Consultancy Services (TCS) Innovation and Research]] where I was working on sensor signal processing. I obtained my Master's degree from [[https://www.iitbbs.ac.in/][Indian Institute of Technology (IIT) Bhubaneswar]] in Electronics and Communication Engineering. I did my thesis with Professor  [[https://scholar.google.co.in/citations?user=ooCsX-UAAAAJ&hl=en][Ganapati Panda]] on compressive sensing.
+
+* Find more about my reasearch
+
+ - [[https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1][Google-scholar]]
+ - [[https://github.com/Blade6570][Github]]
+
+* Recent Publications
+
+  * [[https://tutvision.github.io/icface/][ICface: Interpretable and Controllable Face Reenactment Using GANs]] : WACV 2020
+  * [[https://tutvision.github.io/Learning-image-to-image-translation-using-paired-and-unpaired-training-samples/][Learning image-to-image translation using paired and unpaired training samples]] : ACCV 2018
+
+* Technical blogs
+
+  + [[file:hdf5_blog.org][Note of hdf5-file format]]

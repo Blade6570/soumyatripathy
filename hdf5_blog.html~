@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-06-13 Sat 21:25 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Use hdf5 file format to store large image datasets</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Soumya Tripathy" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Use hdf5 file format to store large image datasets</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3d8cd49">1. Introduction</a></li>
+<li><a href="#orgb9a13ce">2. Modified steps</a></li>
+<li><a href="#org15e9e9f">3. A practical example</a></li>
+<li><a href="#orgd686d96">4. Some issues</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3d8cd49" class="outline-2">
+<h2 id="org3d8cd49"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li>Read the image using <a href="http://pythonware.com/products/pil/">PIL</a> package. (<i>you can use your favourite package instead of PIL</i>)</li>
+<li>Convert it to numpy array.</li>
+<li>Stroe in hdf5 file using <code>create_dataset</code> or you can do fancy things like <code>groups</code> and <code>subgroups</code>.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c9ef8;">import</span> h5py
+<span style="color: #6c9ef8;">import</span> numpy <span style="color: #6c9ef8;">as</span> np
+<span style="color: #6c9ef8;">import</span> os
+<span style="color: #6c9ef8;">from</span> PIL <span style="color: #6c9ef8;">import</span> Image
+<span style="color: #5699AF;">save_path</span> = <span style="color: #d08928;">'./numpy.hdf5'</span>
+<span style="color: #5699AF;">img_path</span> = <span style="color: #d08928;">'1.jpeg'</span>
+<span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'image size: %d bytes'</span>%os.path.getsize(img_path))
+<span style="color: #5699AF;">hf</span> = h5py.File(save_path, <span style="color: #d08928;">'a'</span>) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">open a hdf5 file</span>
+<span style="color: #5699AF;">img_np</span> = np.array(Image.<span style="color: #b77fdb;">open</span>(img_path))
+
+<span style="color: #5699AF;">dset</span> = hf.create_dataset(<span style="color: #d08928;">'default'</span>, data=img_np)  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">write the data to hdf5 file</span>
+hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">close the hdf5 file</span>
+<span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
+</pre>
+</div>
+
+<p>
+Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes <code>100x</code> times more space than the original dataset. This soley happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can the following steps.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb9a13ce" class="outline-2">
+<h2 id="orgb9a13ce"><span class="section-number-2">2</span> Modified steps</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li>Read the image file as python binary file.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c9ef8;">import</span> h5py
+<span style="color: #6c9ef8;">import</span> numpy <span style="color: #6c9ef8;">as</span> np
+<span style="color: #6c9ef8;">import</span> os
+
+<span style="color: #5699AF;">save_path</span> = <span style="color: #d08928;">'./test.hdf5'</span>
+<span style="color: #5699AF;">img_path</span> = <span style="color: #d08928;">'1.jpeg'</span>
+<span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'image size: %d bytes'</span>%os.path.getsize(img_path))
+<span style="color: #5699AF;">hf</span> = h5py.File(save_path, <span style="color: #d08928;">'a'</span>) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">open a hdf5 file</span>
+<span style="color: #6c9ef8;">with</span> <span style="color: #b77fdb;">open</span>(img_path, <span style="color: #d08928;">'rb'</span>) <span style="color: #6c9ef8;">as</span> img_f:
+<span style="background-color: #37474f;"> </span>   <span style="background-color: #37474f;"> </span><span style="color: #5699AF;">binary_data</span> = img_f.read()      <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">read the image as python binary</span>
+
+<span style="color: #5699AF;">binary_data_np</span> = np.asarray(binary_data)
+<span style="color: #5699AF;">dset</span> = hf.create_dataset(<span style="color: #d08928;">'default'</span>, data=binary_data_np)  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">write the data to hdf5 file</span>
+hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">close the hdf5 file</span>
+<span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Inorder to read back the image as numpy array use the following snippet.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c9ef8;">import</span> h5py
+<span style="color: #6c9ef8;">import</span> numpy <span style="color: #6c9ef8;">as</span> np
+<span style="color: #6c9ef8;">import</span> io
+<span style="color: #6c9ef8;">from</span> PIL <span style="color: #6c9ef8;">import</span> Image
+
+<span style="color: #5699AF;">hdf5_file</span> = <span style="color: #d08928;">'./test.hdf5'</span>
+
+<span style="color: #5699AF;">hf</span> = h5py.File(hdf5_file, <span style="color: #d08928;">'r'</span>) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">open a hdf5 file</span>
+
+<span style="color: #5699AF;">key</span> = <span style="color: #b77fdb;">list</span>(hf.keys())[0]
+<span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">"Keys: %s"</span> % key)
+
+<span style="color: #5699AF;">data</span> = np.array(hf[key])   <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">write the data to hdf5 file</span>
+<span style="color: #5699AF;">img</span> = Image.<span style="color: #b77fdb;">open</span>(io.BytesIO(data))
+<span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'image size:'</span>, img.size)
+hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">close the hdf5 file</span>
+img.show()
+</pre>
+</div>
+
+<pre class="example">
+Keys: default
+image size: (502, 287)
+</pre>
+
+
+<ul class="org-ul">
+<li>Now it is clear that the modified steps consume less storage space and also recovers the image as required.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org15e9e9f" class="outline-2">
+<h2 id="org15e9e9f"><span class="section-number-2">3</span> A practical example</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Consider the following file structure. I  have many such As' in my dataset.
+</p>
+
+
+<div class="figure">
+<p><img src="tree.png" alt="tree.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>I have to figure it out to store the images in to a <b>hdf5</b> file but somehow need to retrieve the file structure. In this way I can load the images from hdf5 file with their paths.</li>
+
+<li>The following steps are mostly tailored to address my requirements, but these components can be customized to address other scenarios.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #6c9ef8;">import</span> h5py
+<span style="color: #6c9ef8;">import</span> numpy <span style="color: #6c9ef8;">as</span> np
+<span style="color: #6c9ef8;">import</span> os
+
+<span style="color: #5699AF;">base_path</span> = <span style="color: #d08928;">'./'</span>  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">dataset path</span>
+
+<span style="color: #5699AF;">save_path</span> = <span style="color: #d08928;">'./test.hdf5'</span>  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">path to save the hdf5 file</span>
+
+<span style="color: #5699AF;">hf</span> = h5py.File(save_path, <span style="color: #d08928;">'a'</span>)  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">open the file in append mode</span>
+
+<span style="color: #6c9ef8;">for</span> i <span style="color: #6c9ef8;">in</span> os.listdir(base_path):   <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">read all the As'</span>
+<span style="background-color: #37474f;"> </span>   <span style="color: #5699AF;">vid_name</span> = os.path.join(base_path, i)
+<span style="background-color: #37474f;"> </span>   <span style="color: #5699AF;">grp</span> = hf.create_group(vid_name)  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">create a hdf5 group.  each group is one 'A'</span>
+
+<span style="background-color: #37474f;"> </span>   <span style="color: #6c9ef8;">for</span> j <span style="color: #6c9ef8;">in</span> os.listdir(vid_name):  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">read all as' inside A</span>
+        <span style="color: #5699AF;">track</span> = os.path.join(vid_name, j)
+
+        <span style="color: #5699AF;">subgrp</span> = grp.create_group(j)  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">create a subgroup for the above created group. each small</span>
+                                      <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">a is one subgroup</span>
+
+        <span style="color: #6c9ef8;">for</span> k <span style="color: #6c9ef8;">in</span> os.listdir(track):   <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">find all images inside a.</span>
+            <span style="color: #5699AF;">img_path</span> = os.path.join(track, k)
+
+            <span style="color: #6c9ef8;">with</span> <span style="color: #b77fdb;">open</span>(img_path, <span style="color: #d08928;">'rb'</span>) <span style="color: #6c9ef8;">as</span> img_f:  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">open images as python binary</span>
+                <span style="color: #5699AF;">binary_data</span> = img_f.read()
+
+            <span style="color: #5699AF;">binary_data_np</span> = np.asarray(binary_data)
+
+            <span style="color: #5699AF;">dset</span> = subgrp.create_dataset(k, data=binary_data_np) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">save it in the subgroup. each a-subgrop contains all the images.</span>
+
+hf.close()
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>The question is how to get the names of all the groups and subgroups in the hdf5 file? The h5py package has features like <code>visititems</code> to help us. Lets see the following steps in continuation to the above steps:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">
+<span style="color: #5699AF;">data</span> = []  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. These are basically keys to access our image data.</span>
+
+<span style="color: #5699AF;">group</span> = [] <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">list all groups and subgroups in hdf5 file</span>
+
+<span style="color: #6c9ef8;">def</span> <span style="color: #b77fdb; font-weight: bold;">func</span>(name, obj):     <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">function to recursively store all the keys</span>
+<span style="background-color: #37474f;"> </span>   <span style="color: #6c9ef8;">if</span> <span style="color: #b77fdb;">isinstance</span>(obj, h5py.Dataset):
+        data1.append(name)
+<span style="background-color: #37474f;"> </span>   <span style="color: #6c9ef8;">elif</span> <span style="color: #b77fdb;">isinstance</span>(obj, h5py.Group):
+        group1.append(name)
+
+<span style="color: #5699AF;">hf</span> = h5py.File(save_path, <span style="color: #d08928;">'r'</span>)
+hf.visititems(func)  <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">this is the operation we are talking about.</span>
+
+<span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">Now lets read the image files in their proper format to use it for our training.</span>
+
+<span style="color: #6c9ef8;">for</span> j <span style="color: #6c9ef8;">in</span> data:
+<span style="background-color: #37474f;"> </span>   <span style="color: #5699AF;">kk</span> = np.array(hf[j])
+<span style="background-color: #37474f;"> </span>   <span style="color: #5699AF;">img</span> = Image.<span style="color: #b77fdb;">open</span>(io.BytesIO(kk)) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">our image file</span>
+<span style="background-color: #37474f;"> </span>   <span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'image size:'</span>, img.size)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd686d96" class="outline-2">
+<h2 id="orgd686d96"><span class="section-number-2">4</span> Some issues</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Soumya Tripathy</p>
+<p class="date">Created: 2020-06-13 Sat 21:25</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
