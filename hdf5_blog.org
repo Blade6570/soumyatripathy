@@ -32,7 +32,7 @@ Although these steps are good for small datasets, the hdf5 file size increases r
 
 * Modified steps
 
-1. Read the image file as python binary file.
+ - Read the image file as python binary file.
 
 #+BEGIN_SRC python :results output :exports both
 import h5py
@@ -56,7 +56,7 @@ print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 : image size: 23986 bytes
 : hdf5 file size: 26034 bytes
 
-2. In order to read back the image as numpy array use the following snippet.
+ - In order to read back the image as numpy array use the following snippet.
 
 #+BEGIN_SRC python :results output :exports both
 import h5py

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-13 Sat 22:15 -->
+<!-- 2020-06-13 Sat 23:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use hdf5 file format to store large image datasets</title>
@@ -247,21 +247,25 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga8d1d25">1. Introduction</a></li>
-<li><a href="#org4e02768">2. Modified steps</a></li>
-<li><a href="#org9b89e60">3. A practical example</a></li>
-<li><a href="#org0d077e4">4. Some issues</a></li>
+<li><a href="#orgaad6cdf">1. Introduction</a></li>
+<li><a href="#orged905c6">2. Modified steps</a></li>
+<li><a href="#org710ee02">3. A practical example</a></li>
+<li><a href="#org3a29c91">4. Some issues</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga8d1d25" class="outline-2">
-<h2 id="orga8d1d25"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgaad6cdf" class="outline-2">
+<h2 id="orgaad6cdf"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
+</p>
+
 <ol class="org-ol">
-<li>Read the image using <a href="http://pythonware.com/products/pil/">PIL</a> package. (<i>you can use your favourite package instead of PIL</i>)</li>
+<li>Read the image using <a href="http://pythonware.com/products/pil/">PIL</a> package. (<i>you can use your favorite package instead of PIL</i>)</li>
 <li>Convert it to numpy array.</li>
-<li>Stroe in hdf5 file using <code>create_dataset</code> or you can do fancy things like <code>groups</code> and <code>subgroups</code>.</li>
+<li>Store in hdf5 file using <code>create_dataset</code> or you can do fancy things like <code>groups</code> and <code>subgroups</code>.</li>
 </ol>
 
 <div class="org-src-container">
@@ -282,17 +286,17 @@ hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span sty
 </div>
 
 <p>
-Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes <code>100x</code> times more space than the original dataset. This soley happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can the following steps.
+Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes <code>100x</code> times more space than the original dataset. This solely happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can the following steps.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org4e02768" class="outline-2">
-<h2 id="org4e02768"><span class="section-number-2">2</span> Modified steps</h2>
+<div id="outline-container-orged905c6" class="outline-2">
+<h2 id="orged905c6"><span class="section-number-2">2</span> Modified steps</h2>
 <div class="outline-text-2" id="text-2">
-<ol class="org-ol">
+<ul class="org-ul">
 <li>Read the image file as python binary file.</li>
-</ol>
+</ul>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #6c9ef8;">import</span> h5py
@@ -313,9 +317,9 @@ hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span sty
 </pre>
 </div>
 
-<ol class="org-ol">
-<li>Inorder to read back the image as numpy array use the following snippet.</li>
-</ol>
+<ul class="org-ul">
+<li>In order to read back the image as numpy array use the following snippet.</li>
+</ul>
 
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #6c9ef8;">import</span> h5py
@@ -350,8 +354,8 @@ image size: (502, 287)
 </div>
 </div>
 
-<div id="outline-container-org9b89e60" class="outline-2">
-<h2 id="org9b89e60"><span class="section-number-2">3</span> A practical example</h2>
+<div id="outline-container-org710ee02" class="outline-2">
+<h2 id="org710ee02"><span class="section-number-2">3</span> A practical example</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
@@ -398,7 +402,7 @@ Consider the following file structure. I  have many such As' in my dataset.
 
             <span style="color: #5699AF;">binary_data_np</span> = np.asarray(binary_data)
 
-            <span style="color: #5699AF;">dset</span> = subgrp.create_dataset(k, data=binary_data_np) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">save it in the subgroup. each a-subgrop contains all the images.</span>
+            <span style="color: #5699AF;">dset</span> = subgrp.create_dataset(k, data=binary_data_np) <span style="color: #b0bec5; font-style: italic;"># </span><span style="color: #808080; font-style: italic;">save it in the subgroup. each a-subgroup contains all the images.</span>
 
 hf.close()
 
@@ -435,17 +439,15 @@ hf.visititems(func)  <span style="color: #b0bec5; font-style: italic;"># </span>
 </div>
 </div>
 
-<div id="outline-container-org0d077e4" class="outline-2">
-<h2 id="org0d077e4"><span class="section-number-2">4</span> Some issues</h2>
+<div id="outline-container-org3a29c91" class="outline-2">
+<h2 id="org3a29c91"><span class="section-number-2">4</span> Some issues</h2>
 <div class="outline-text-2" id="text-4">
-<p>
-please check this out <a href="file:///home/soumya/org_files/technical_docs/stylegan_progress.html">stylegan</a></p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-06-13 Sat 22:15</p>
+<p class="date">Created: 2020-06-13 Sat 23:59</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
