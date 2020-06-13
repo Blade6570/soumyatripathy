@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-13 Sat 21:25 -->
+<!-- 2020-06-13 Sat 22:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use hdf5 file format to store large image datasets</title>
@@ -247,16 +247,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3d8cd49">1. Introduction</a></li>
-<li><a href="#orgb9a13ce">2. Modified steps</a></li>
-<li><a href="#org15e9e9f">3. A practical example</a></li>
-<li><a href="#orgd686d96">4. Some issues</a></li>
+<li><a href="#orga8d1d25">1. Introduction</a></li>
+<li><a href="#org4e02768">2. Modified steps</a></li>
+<li><a href="#org9b89e60">3. A practical example</a></li>
+<li><a href="#org0d077e4">4. Some issues</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3d8cd49" class="outline-2">
-<h2 id="org3d8cd49"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orga8d1d25" class="outline-2">
+<h2 id="orga8d1d25"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <ol class="org-ol">
 <li>Read the image using <a href="http://pythonware.com/products/pil/">PIL</a> package. (<i>you can use your favourite package instead of PIL</i>)</li>
@@ -287,8 +287,8 @@ Although these steps are good for small datasets, the hdf5 file size increases r
 </div>
 </div>
 
-<div id="outline-container-orgb9a13ce" class="outline-2">
-<h2 id="orgb9a13ce"><span class="section-number-2">2</span> Modified steps</h2>
+<div id="outline-container-org4e02768" class="outline-2">
+<h2 id="org4e02768"><span class="section-number-2">2</span> Modified steps</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>Read the image file as python binary file.</li>
@@ -350,8 +350,8 @@ image size: (502, 287)
 </div>
 </div>
 
-<div id="outline-container-org15e9e9f" class="outline-2">
-<h2 id="org15e9e9f"><span class="section-number-2">3</span> A practical example</h2>
+<div id="outline-container-org9b89e60" class="outline-2">
+<h2 id="org9b89e60"><span class="section-number-2">3</span> A practical example</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
@@ -406,7 +406,7 @@ hf.close()
 </div>
 
 <ul class="org-ul">
-<li>The question is how to get the names of all the groups and subgroups in the hdf5 file? The h5py package has features like <code>visititems</code> to help us. Lets see the following steps in continuation to the above steps:</li>
+<li>The question is how to get the names of all the groups and subgroups from the hdf5 file? The h5py package has features like <code>visititems</code> to help us access back the image files. Lets see the following steps in continuation to the above steps:</li>
 </ul>
 
 <div class="org-src-container">
@@ -435,13 +435,17 @@ hf.visititems(func)  <span style="color: #b0bec5; font-style: italic;"># </span>
 </div>
 </div>
 
-<div id="outline-container-orgd686d96" class="outline-2">
-<h2 id="orgd686d96"><span class="section-number-2">4</span> Some issues</h2>
+<div id="outline-container-org0d077e4" class="outline-2">
+<h2 id="org0d077e4"><span class="section-number-2">4</span> Some issues</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+please check this out <a href="file:///home/soumya/org_files/technical_docs/stylegan_progress.html">stylegan</a></p>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-06-13 Sat 21:25</p>
+<p class="date">Created: 2020-06-13 Sat 22:15</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
