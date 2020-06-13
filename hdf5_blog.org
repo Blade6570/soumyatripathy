@@ -172,4 +172,5 @@ for j in data:
 #+END_SRC
 
 * Some issues
+
  - In Pytorch I have noticed that parallel reading doesn't work (batch size > 1 in dataloader). However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: [[http://docs.h5py.org/en/stable/swmr.html][SWMR]]

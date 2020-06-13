@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-14 Sun 00:00 -->
+<!-- 2020-06-14 Sun 00:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use hdf5 file format to store large image datasets</title>
@@ -247,16 +247,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5203d0f">1. Introduction</a></li>
-<li><a href="#org1405b95">2. Modified steps</a></li>
-<li><a href="#orgf1e909d">3. A practical example</a></li>
-<li><a href="#org059853c">4. Some issues</a></li>
+<li><a href="#orga088fce">1. Introduction</a></li>
+<li><a href="#orgdadeb99">2. Modified steps</a></li>
+<li><a href="#org001d123">3. A practical example</a></li>
+<li><a href="#org091a6bc">4. Some issues</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5203d0f" class="outline-2">
-<h2 id="org5203d0f"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orga088fce" class="outline-2">
+<h2 id="orga088fce"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
@@ -297,8 +297,8 @@ Although these steps are good for small datasets, the hdf5 file size increases r
 </div>
 </div>
 
-<div id="outline-container-org1405b95" class="outline-2">
-<h2 id="org1405b95"><span class="section-number-2">2</span> Modified steps</h2>
+<div id="outline-container-orgdadeb99" class="outline-2">
+<h2 id="orgdadeb99"><span class="section-number-2">2</span> Modified steps</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>Read the image file as python binary file.</li>
@@ -366,8 +366,8 @@ image size: (502, 287)
 </div>
 </div>
 
-<div id="outline-container-orgf1e909d" class="outline-2">
-<h2 id="orgf1e909d"><span class="section-number-2">3</span> A practical example</h2>
+<div id="outline-container-org001d123" class="outline-2">
+<h2 id="org001d123"><span class="section-number-2">3</span> A practical example</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
@@ -451,15 +451,18 @@ hf.visititems(func)  <span style="color: #b0bec5; font-style: italic;"># </span>
 </div>
 </div>
 
-<div id="outline-container-org059853c" class="outline-2">
-<h2 id="org059853c"><span class="section-number-2">4</span> Some issues</h2>
+<div id="outline-container-org091a6bc" class="outline-2">
+<h2 id="org091a6bc"><span class="section-number-2">4</span> Some issues</h2>
 <div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>In Pytorch I have noticed that parallel reading doesn't work (batch size &gt; 1 in dataloader). However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: <a href="http://docs.h5py.org/en/stable/swmr.html">SWMR</a></li>
+</ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-06-14 Sun 00:00</p>
+<p class="date">Created: 2020-06-14 Sun 00:10</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

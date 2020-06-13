@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-13 Sat 23:59 -->
+<!-- 2020-06-14 Sun 00:00 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use hdf5 file format to store large image datasets</title>
@@ -247,16 +247,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgaad6cdf">1. Introduction</a></li>
-<li><a href="#orged905c6">2. Modified steps</a></li>
-<li><a href="#org710ee02">3. A practical example</a></li>
-<li><a href="#org3a29c91">4. Some issues</a></li>
+<li><a href="#org5203d0f">1. Introduction</a></li>
+<li><a href="#org1405b95">2. Modified steps</a></li>
+<li><a href="#orgf1e909d">3. A practical example</a></li>
+<li><a href="#org059853c">4. Some issues</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgaad6cdf" class="outline-2">
-<h2 id="orgaad6cdf"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org5203d0f" class="outline-2">
+<h2 id="org5203d0f"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
@@ -285,14 +285,20 @@ hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span sty
 </pre>
 </div>
 
+<pre class="example">
+image size: 23986 bytes
+hdf5 file size: 434270 bytes
+</pre>
+
+
 <p>
 Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes <code>100x</code> times more space than the original dataset. This solely happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can the following steps.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orged905c6" class="outline-2">
-<h2 id="orged905c6"><span class="section-number-2">2</span> Modified steps</h2>
+<div id="outline-container-org1405b95" class="outline-2">
+<h2 id="org1405b95"><span class="section-number-2">2</span> Modified steps</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>Read the image file as python binary file.</li>
@@ -316,6 +322,12 @@ hf.close()  <span style="color: #b0bec5; font-style: italic;"># </span><span sty
 <span style="color: #6c9ef8;">print</span>(<span style="color: #d08928;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
 </pre>
 </div>
+
+<pre class="example">
+image size: 23986 bytes
+hdf5 file size: 26034 bytes
+</pre>
+
 
 <ul class="org-ul">
 <li>In order to read back the image as numpy array use the following snippet.</li>
@@ -354,8 +366,8 @@ image size: (502, 287)
 </div>
 </div>
 
-<div id="outline-container-org710ee02" class="outline-2">
-<h2 id="org710ee02"><span class="section-number-2">3</span> A practical example</h2>
+<div id="outline-container-orgf1e909d" class="outline-2">
+<h2 id="orgf1e909d"><span class="section-number-2">3</span> A practical example</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
@@ -439,15 +451,15 @@ hf.visititems(func)  <span style="color: #b0bec5; font-style: italic;"># </span>
 </div>
 </div>
 
-<div id="outline-container-org3a29c91" class="outline-2">
-<h2 id="org3a29c91"><span class="section-number-2">4</span> Some issues</h2>
+<div id="outline-container-org059853c" class="outline-2">
+<h2 id="org059853c"><span class="section-number-2">4</span> Some issues</h2>
 <div class="outline-text-2" id="text-4">
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-06-13 Sat 23:59</p>
+<p class="date">Created: 2020-06-14 Sun 00:00</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
