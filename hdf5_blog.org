@@ -1,6 +1,7 @@
 #+TITLE: Use hdf5 file format to store large image datasets
 
 * Introduction
+
 A simple search on [[https://duckduckgo.com/][duckduckgo]] or [[google.com][google]] yields a number of tutorials on creating hdf5 files using  python package [[http://www.h5py.org/][h5py]]. The common approach involves the following steps:
 
  1. Read the image using [[http://pythonware.com/products/pil/][PIL]] package. (/you can use your favorite package instead of PIL/)
