@@ -21,4 +21,4 @@ I am a Ph.D student in the Faculty of Computing and Electrical Engineering,  [[h
 
 * Technical blogs
 
-  + [[file:hdf5_blog.org][Note of hdf5-file format]]
+  + [[file:hdf5_blog.org][Note on hdf5-file format]]
