@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-14 Sun 00:10 -->
+<!-- 2020-07-05 Sun 17:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Use hdf5 file format to store large image datasets</title>
@@ -247,16 +247,16 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga088fce">1. Introduction</a></li>
-<li><a href="#orgdadeb99">2. Modified steps</a></li>
-<li><a href="#org001d123">3. A practical example</a></li>
-<li><a href="#org091a6bc">4. Some issues</a></li>
+<li><a href="#org15b0a9e">1. Introduction</a></li>
+<li><a href="#org27a9d09">2. Modified steps</a></li>
+<li><a href="#org22c7434">3. A practical example</a></li>
+<li><a href="#org3968bbd">4. Some issues [Solved]</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga088fce" class="outline-2">
-<h2 id="orga088fce"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-org15b0a9e" class="outline-2">
+<h2 id="org15b0a9e"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
@@ -297,8 +297,8 @@ Although these steps are good for small datasets, the hdf5 file size increases r
 </div>
 </div>
 
-<div id="outline-container-orgdadeb99" class="outline-2">
-<h2 id="orgdadeb99"><span class="section-number-2">2</span> Modified steps</h2>
+<div id="outline-container-org27a9d09" class="outline-2">
+<h2 id="org27a9d09"><span class="section-number-2">2</span> Modified steps</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>Read the image file as python binary file.</li>
@@ -366,8 +366,8 @@ image size: (502, 287)
 </div>
 </div>
 
-<div id="outline-container-org001d123" class="outline-2">
-<h2 id="org001d123"><span class="section-number-2">3</span> A practical example</h2>
+<div id="outline-container-org22c7434" class="outline-2">
+<h2 id="org22c7434"><span class="section-number-2">3</span> A practical example</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
@@ -451,18 +451,18 @@ hf.visititems(func)  <span style="color: #b0bec5; font-style: italic;"># </span>
 </div>
 </div>
 
-<div id="outline-container-org091a6bc" class="outline-2">
-<h2 id="org091a6bc"><span class="section-number-2">4</span> Some issues</h2>
+<div id="outline-container-org3968bbd" class="outline-2">
+<h2 id="org3968bbd"><span class="section-number-2">4</span> Some issues [Solved]</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
-<li>In Pytorch I have noticed that parallel reading doesn't work (batch size &gt; 1 in dataloader). However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: <a href="http://docs.h5py.org/en/stable/swmr.html">SWMR</a></li>
+<li>In Pytorch I have noticed that parallel reading doesn't work (number of workers &gt; 1 in dataloader). <del>However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: <a href="http://docs.h5py.org/en/stable/swmr.html">SWMR</a></del>. Combining Pytorch dataloader and h5py was bit problematic but found a fix for that. There may be better solution that I am not aware of. In usual pytorch dataloader, I open the hdf5 file in the <code>__init__()</code> function and then read from them in <code>__getitem__()</code>. However in the case of <b>num of workers &gt; 1</b> it fails. So the fix is to open the hdf5 file inside the <code>__getitem__()</code> instead of <code>__init__()</code>. It solves the problem and runs with multiple number of workers.</li>
 </ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-06-14 Sun 00:10</p>
+<p class="date">Created: 2020-07-05 Sun 17:47</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

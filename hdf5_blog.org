@@ -171,6 +171,6 @@ for j in data:
     print('image size:', img.size)
 #+END_SRC
 
-* Some issues
+* Some issues [Solved]
 
- - In Pytorch I have noticed that parallel reading doesn't work (batch size > 1 in dataloader). However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: [[http://docs.h5py.org/en/stable/swmr.html][SWMR]]
+ - In Pytorch I have noticed that parallel reading doesn't work (number of workers > 1 in dataloader). +However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: [[http://docs.h5py.org/en/stable/swmr.html][SWMR]]+. Combining Pytorch dataloader and h5py was bit problematic but found a fix for that. There may be better solution that I am not aware of. In usual pytorch dataloader, I open the hdf5 file in the =__init__()= function and then read from them in =__getitem__()=. However in the case of *num of workers > 1* it fails. So the fix is to open the hdf5 file inside the =__getitem__()= instead of =__init__()=. It solves the problem and runs with multiple number of workers.
