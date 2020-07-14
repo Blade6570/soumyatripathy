@@ -1,4 +1,7 @@
-#+TITLE: Use hdf5 file format to store large image datasets
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine_dark.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+#+HTML_HEAD: <base target="_blank">
+#+TITLE: Hdf5 file format for large image datasets
 
 * Introduction
 
@@ -28,7 +31,7 @@ print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 : image size: 23986 bytes
 : hdf5 file size: 434270 bytes
 
-Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes ~100x~ times more space than the original dataset. This solely happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can the following steps.
+Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes ~100x~ times more space than the original dataset. This solely happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can follow the steps as given below.
 
 * Modified steps
 
