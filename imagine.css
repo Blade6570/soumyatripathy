@@ -91,6 +91,7 @@ a:hover{
 img{
     max-width: 100%;
     height: auto;
+    style: border:2px solid black;
 }
 
 /* Responsive code blocks and tables */
