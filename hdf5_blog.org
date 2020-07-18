@@ -1,7 +1,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine_dark.css" />
 #+OPTIONS: toc:nil num:nil html-style:nil
 #+HTML_HEAD: <base target="_blank">
-#+TITLE: Hdf5 file format for large image datasets
+#+TITLE: Hdf5 file for large image datasets
 
 * Introduction
 

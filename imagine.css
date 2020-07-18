@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Barlow Semi Condensed&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Overpass Mono&display=swap');
 /* Variables. Feel free to edit these! */
 :root {
     --color-primary: #028090;
@@ -14,7 +14,7 @@
 
     /*--font-normal: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman";*/
     --font-normal: 'Barlow Semi Condensed', Shadows;
-    --font-headings: 'Open Sans Condensed', cursive;
+    --font-headings: 'Overpass Mono', Shadows;
 
     --font-size-1: 33.57px;
     --font-size-2: 26.86px;
