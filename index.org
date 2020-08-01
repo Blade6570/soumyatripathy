@@ -17,10 +17,9 @@
 I am a Ph.D student in the Faculty of Computing and Electrical Engineering, [[http://www.tuni.fi/en][Tampere University]]. I am working on computer vision under the supervision of Professor [[http://esa.rahtu.fi/][Esa Rahtu]] from Tampere University and Professor [[https://users.aalto.fi/~kannalj1/][Juho Kannala]] from [[http://www.aalto.fi/en/][Aalto University]].
           Prior to coming to Finland, I was working as a Researcher at [[https://www.tcs.com/research-and-innovation][Tata Consultancy Services (TCS) Innovation and Research]] where I was working on sensor signal processing. I obtained my Master's degree from [[https://www.iitbbs.ac.in/][Indian Institute of Technology (IIT) Bhubaneswar]] in Electronics and Communication Engineering. I did my thesis with Professor  [[https://scholar.google.co.in/citations?user=ooCsX-UAAAAJ&hl=en][Ganapati Panda]] on compressive sensing.
 
-* Find more about my reasearch
+* Find more about my research
 
- - [[https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1][Google-scholar]]
- - [[https://github.com/Blade6570][Github]]
+#+html: <p align="left"><a href="https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1"><img src="google_scholar.png" width=40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://github.com/Blade6570"><img src="github.png" width=40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://www.linkedin.com/in/soumya-tripathy-912572102//"><img src="linkedin.png" width=40" height="70"></a></p>
 
 * Recent Publications
 
