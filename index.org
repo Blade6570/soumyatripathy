@@ -8,7 +8,7 @@
 #+OPTIONS: num:nil
 
 #+attr_html: :width 200px
-#+ATTR_HTML: :style float:left;margin:10px 40px 40px 80px;
+#+ATTR_HTML: :style float:left;margin:10px 40px 40px 160px;
 #+ATTR_HTML::alt image
 [[file:Tripathy_Soumya.JPG]]
 
