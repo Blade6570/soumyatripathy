@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-10-26 Mon 15:27 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Org-search using Org-refile and Silver-searcher</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Soumya Tripathy" />
+<link rel="stylesheet" type="text/css" href="normalize.css" />
+<base target="_blank">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Org-search using Org-refile and Silver-searcher</h1>
+<p>
+Org-mode is one of the most useful tools in Emacs and I use it every day for my agenda, notes, course material, academic paper writing and so on. Naturally, I need a searching tool to find my org-headings inside the Emacs and navigate/rearrange them. I came across <a href="https://yiming.dev/blog/2018/03/02/my-org-refile-workflow/">this post</a> of <a href="https://yiming.dev/blog/2018/03/02/my-org-refile-workflow/">Yiming Chen</a> and liked the way he searches for the org-headings using org-refile. However, the only downside is that it can only search for org-headings in the already opened org-files. Sometimes, I want to go through an org-file but don't remember its name or locations. So I want to search using some key-points from that document that I remember. For this kind of search, I usually use silver-searcher in the terminal but I wanted to make it work in Emacs too.
+</p>
+
+<p>
+I used the same technique of Yiming Chen to search org-headings but extended it to search from all the org-files in your system. I used the silver searcher inside the Emacs to first get all the org-files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span style="color: #579C4C;">;; </span><span style="color: #579C4C;">Reads the buffer contents as string</span>
+ (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">buffer-whole-string</span> (buffer)
+   (<span style="color: #339CDB;">with-current-buffer</span> buffer
+     (<span style="color: #339CDB;">save-restriction</span>
+       (widen)
+       (buffer-substring-no-properties (point-min) (point-max)))))
+<span style="color: #579C4C;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span style="color: #579C4C;">;; </span><span style="color: #579C4C;">Get the file names of all the org files in the /home/user folder using silver-searcher</span>
+
+ (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">+org/opened-buffer-files</span> ()
+   <span style="color: #777778;">"Return the list of files currently opened in emacs"</span>
+   (<span style="color: #339CDB;">let</span> ((default-directory <span style="color: #DB8E73;">"~/"</span>))
+     (shell-command <span style="color: #DB8E73;">"ag -l --org --ignore-dir={./.emacs.d,./back.emacs.d,./backup_27.emacs.d}"</span>))
+    (delq nil
+          (mapcar (<span style="color: #339CDB;">lambda</span> (x)
+                        (concat <span style="color: #DB8E73;">"~/"</span> x))
+                        (split-string (buffer-whole-string <span style="color: #DB8E73;">"*Shell Command Output*"</span>)))))
+<span style="color: #579C4C;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+
+   (<span style="color: #339CDB;">setq</span> org-refile-targets '((+org/opened-buffer-files <span style="color: #C586C0;">:maxlevel</span> . 9))) <span style="color: #579C4C;">;; </span><span style="color: #579C4C;">get the headings from the file path</span>
+   (<span style="color: #339CDB;">setq</span> org-refile-use-outline-path 'file)
+   <span style="color: #579C4C;">;; </span><span style="color: #579C4C;">makes org-refile outline working with helm/ivy</span>
+   (<span style="color: #339CDB;">setq</span> org-outline-path-complete-in-steps nil)
+   (<span style="color: #339CDB;">setq</span> org-refile-allow-creating-parent-nodes 'confirm)
+
+<span style="color: #579C4C;">;; </span><span style="color: #579C4C;">This is the function to call</span>
+   (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">+org-search</span> ()
+     (<span style="color: #339CDB;">interactive</span>)
+     (org-refile '(4)))
+</pre>
+</div>
+
+<p>
+I realized that <code>org-refile-targets</code> opens all the org-files in the Emacs before reading their headings. This is a bit annoying because if you have hundreads of org files then all will be opened in the buffers and create clutter in your working environment. So it will be desirable to kill those newly opened buffers after the <code>+org-search</code>. To accommodate this function, I have rewritten the above code into the following.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">
+<span style="color: #579C4C;">;; </span><span style="color: #579C4C;">Reads the buffer contents as string</span>
+ (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">buffer-whole-string</span> (buffer)
+   (<span style="color: #339CDB;">with-current-buffer</span> buffer
+     (<span style="color: #339CDB;">save-restriction</span>
+       (widen)
+       (buffer-substring-no-properties (point-min) (point-max)))))
+<span style="color: #579C4C;">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span style="color: #579C4C;">;; </span><span style="color: #579C4C;">Get the file names of all the org files in the /home/user folder using silver-searcher</span>
+
+ (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">+org/opened-buffer-files</span> ()
+   <span style="color: #777778;">"Return the list of files currently opened in emacs"</span>
+   (<span style="color: #339CDB;">let</span> ((default-directory <span style="color: #DB8E73;">"~/"</span>))
+     (shell-command <span style="color: #DB8E73;">"ag -l --org --ignore-dir={./.emacs.d,./back.emacs.d,./backup_27.emacs.d}"</span>))
+   (<span style="color: #339CDB;">with-output-to-temp-buffer</span> <span style="color: #DB8E73;">"foo"</span> (print
+      (delq nil
+          (mapcar (<span style="color: #339CDB;">lambda</span> (x)
+                    (<span style="color: #339CDB;">if</span> (not (get-file-buffer (concat <span style="color: #DB8E73;">"~/"</span> x)))
+                        (concat <span style="color: #DB8E73;">"~/"</span> x)))
+                  (split-string (buffer-whole-string <span style="color: #DB8E73;">"*Shell Command Output*"</span>))))))
+    (delq nil
+          (mapcar (<span style="color: #339CDB;">lambda</span> (x)
+                        (concat <span style="color: #DB8E73;">"~/"</span> x))
+                        (split-string (buffer-whole-string <span style="color: #DB8E73;">"*Shell Command Output*"</span>)))))
+ <span style="color: #579C4C;">;;  </span><span style="color: #579C4C;">(kill-buffer "*Shell Command Output*"))</span>
+
+
+   (<span style="color: #339CDB;">setq</span> org-refile-targets '((+org/opened-buffer-files <span style="color: #C586C0;">:maxlevel</span> . 9)))
+   (<span style="color: #339CDB;">setq</span> org-refile-use-outline-path 'file)
+   <span style="color: #579C4C;">;; </span><span style="color: #579C4C;">makes org-refile outline working with helm/ivy</span>
+   (<span style="color: #339CDB;">setq</span> org-outline-path-complete-in-steps nil)
+   (<span style="color: #339CDB;">setq</span> org-refile-allow-creating-parent-nodes 'confirm)
+   (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">+org-search</span> ()
+     (<span style="color: #339CDB;">interactive</span>)
+     (org-refile '(4)))
+
+ <span style="color: #579C4C;">;; </span><span style="color: #579C4C;">Function to Close all the newly opened buffers except the current-buffer.</span>
+   (<span style="color: #339CDB;">defun</span> <span style="color: #D9DAA2;">+org/close-buffer-files</span> ()
+     (<span style="color: #339CDB;">interactive</span>)
+     (mapcar (<span style="color: #339CDB;">lambda</span> (x)
+               (<span style="color: #339CDB;">if</span> (<span style="color: #339CDB;">and</span> (get-file-buffer (substring x 1 -1)) (not (eq (current-buffer) (get-file-buffer (substring x 1 -1)))))
+                   (kill-buffer (get-file-buffer (substring x 1 -1)))))
+                   (split-string (<span style="color: #339CDB;">with-current-buffer</span> <span style="color: #DB8E73;">"foo"</span>
+                     (<span style="color: #339CDB;">save-restriction</span>
+                       (widen)
+                       (buffer-substring-no-properties (+ (point-min) 2) (point-max)))))))
+
+</pre>
+</div>
+
+<p>
+I wanted to include the <code>+org/close-buffer-files</code> function into the <code>+org-search</code> function but I failed to achieve that. Any help will be appreciated in this regard. Any other suggestions to improve this workflow are also welcomed.
+</p>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Soumya Tripathy</p>
+<p class="date">Created: 2020-10-26 Mon 15:27</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

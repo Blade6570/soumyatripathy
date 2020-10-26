@@ -1,0 +1,97 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="normalize.css" />
+#+OPTIONS: toc:nil num:nil html-style:nil
+#+HTML_HEAD: <base target="_blank">
+#+TITLE: Org-search using Org-refile and Silver-searcher
+
+  Org-mode is one of the most useful tools in Emacs and I use it every day for my agenda, notes, course material, academic paper writing and so on. Naturally, I need a searching tool to find my org-headings inside the Emacs and navigate/rearrange them. I came across [[https://yiming.dev/blog/2018/03/02/my-org-refile-workflow/][this post]] of [[https://yiming.dev/blog/2018/03/02/my-org-refile-workflow/][Yiming Chen]] and liked the way he searches for the org-headings using org-refile. However, the only downside is that it can only search for org-headings in the already opened org-files. Sometimes, I want to go through an org-file but don't remember its name or locations. So I want to search using some key-points from that document that I remember. For this kind of search, I usually use silver-searcher in the terminal but I wanted to make it work in Emacs too.
+
+  I used the same technique of Yiming Chen to search org-headings but extended it to search from all the org-files in your system. I used the silver searcher inside the Emacs to first get all the org-files.
+
+#+BEGIN_SRC emacs-lisp
+   ;; Reads the buffer contents as string
+    (defun buffer-whole-string (buffer)
+      (with-current-buffer buffer
+	(save-restriction
+	  (widen)
+	  (buffer-substring-no-properties (point-min) (point-max)))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+   ;; Get the file names of all the org files in the /home/user folder using silver-searcher
+
+    (defun +org/opened-buffer-files ()
+      "Return the list of files currently opened in emacs"
+      (let ((default-directory "~/"))
+	(shell-command "ag -l --org --ignore-dir={./.emacs.d,./back.emacs.d,./backup_27.emacs.d}"))
+       (delq nil
+	     (mapcar (lambda (x)
+			   (concat "~/" x))
+			   (split-string (buffer-whole-string "*Shell Command Output*")))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+      (setq org-refile-targets '((+org/opened-buffer-files :maxlevel . 9))) ;; get the headings from the file path
+      (setq org-refile-use-outline-path 'file)
+      ;; makes org-refile outline working with helm/ivy
+      (setq org-outline-path-complete-in-steps nil)
+      (setq org-refile-allow-creating-parent-nodes 'confirm)
+
+   ;; This is the function to call
+      (defun +org-search ()
+	(interactive)
+	(org-refile '(4)))
+#+END_SRC
+
+  I realized that ~org-refile-targets~ opens all the org-files in the Emacs before reading their headings. This is a bit annoying because if you have hundreads of org files then all will be opened in the buffers and create clutter in your working environment. So it will be desirable to kill those newly opened buffers after the ~+org-search~. To accommodate this function, I have rewritten the above code into the following.
+
+#+BEGIN_SRC emacs-lisp
+
+   ;; Reads the buffer contents as string
+    (defun buffer-whole-string (buffer)
+      (with-current-buffer buffer
+	(save-restriction
+	  (widen)
+	  (buffer-substring-no-properties (point-min) (point-max)))))
+   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+   ;; Get the file names of all the org files in the /home/user folder using silver-searcher
+
+    (defun +org/opened-buffer-files ()
+      "Return the list of files currently opened in emacs"
+      (let ((default-directory "~/"))
+	(shell-command "ag -l --org --ignore-dir={./.emacs.d,./back.emacs.d,./backup_27.emacs.d}"))
+      (with-output-to-temp-buffer "foo" (print
+	 (delq nil
+	     (mapcar (lambda (x)
+		       (if (not (get-file-buffer (concat "~/" x)))
+			   (concat "~/" x)))
+		     (split-string (buffer-whole-string "*Shell Command Output*"))))))
+       (delq nil
+	     (mapcar (lambda (x)
+			   (concat "~/" x))
+			   (split-string (buffer-whole-string "*Shell Command Output*")))))
+    ;;  (kill-buffer "*Shell Command Output*"))
+
+
+      (setq org-refile-targets '((+org/opened-buffer-files :maxlevel . 9)))
+      (setq org-refile-use-outline-path 'file)
+      ;; makes org-refile outline working with helm/ivy
+      (setq org-outline-path-complete-in-steps nil)
+      (setq org-refile-allow-creating-parent-nodes 'confirm)
+      (defun +org-search ()
+	(interactive)
+	(org-refile '(4)))
+
+    ;; Function to Close all the newly opened buffers except the current-buffer.
+      (defun +org/close-buffer-files ()
+        (interactive)
+        (mapcar (lambda (x)
+		  (if (and (get-file-buffer (substring x 1 -1)) (not (eq (current-buffer) (get-file-buffer (substring x 1 -1)))))
+                      (kill-buffer (get-file-buffer (substring x 1 -1)))))
+		      (split-string (with-current-buffer "foo"
+			(save-restriction
+			  (widen)
+			  (buffer-substring-no-properties (+ (point-min) 2) (point-max)))))))
+
+#+END_SRC
+
+  I wanted to include the ~+org/close-buffer-files~ function into the ~+org-search~ function but I failed to achieve that. Any help will be appreciated in this regard. Any other suggestions to improve this workflow are also welcomed.

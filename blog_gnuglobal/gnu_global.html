@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-03 Sat 21:25 -->
+<!-- 2020-10-26 Mon 15:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GTags in Emacs</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Soumya Tripathy" />
-<link rel="stylesheet" type="text/css" href="./imagine_dark.css" />
+<link rel="stylesheet" type="text/css" href="./normalize.css" />
 <base target="_blank">
 <script type="text/javascript">
 /*
@@ -62,9 +62,9 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">GTags in Emacs</h1>
 
-<div id="outline-container-orgd70aab6" class="outline-2">
-<h2 id="orgd70aab6">Prologue</h2>
-<div class="outline-text-2" id="text-orgd70aab6">
+<div id="outline-container-org1c8c8ae" class="outline-2">
+<h2 id="org1c8c8ae">Prologue</h2>
+<div class="outline-text-2" id="text-org1c8c8ae">
 <p>
 I usually code in Python and When I have a lot of functions in different files in a project then it is desirable to jump to the function definition from its identifier at point. In Emacs, Elpy attached a function to <b>Meta-.</b> called <b>(elpy-goto-definition)</b> that works sometimes and doesn't most of the time on remote files. There are some other good options to tackle this problem like <b>elpy-rgrep-symbol</b>, <b>rgrep</b> but they are not efficient for me. I also tried <b>LSP</b> mode (<i>mspyls</i>) which works good in local but always complains about server time elapsed over tramp. I was really in desperate need of this feature that works over tramp because most of my editings are based on the servers.
 I saw about <a href="https://www.gnu.org/software/global/">GNU-GLOBAL</a> on some online platform which is widely used by C-programmers for use-cases as of mine. I looked in to it and found that they work too for python with extra plugins. The idea is simple that they create TAG files of your source codes before hand and Emacs can use those TAG files to navigate around the project. For this I followed <a href="https://www.spacemacs.org/layers/+tags/gtags/README.html">gtags-spacemacs</a> which works for my vanilla-Emacs too. To make it work over tramp I had to install gnu-global on server for which I am writing this article for my future reference.
@@ -72,9 +72,9 @@ I saw about <a href="https://www.gnu.org/software/global/">GNU-GLOBAL</a> on som
 </div>
 </div>
 
-<div id="outline-container-org79dd8db" class="outline-2">
-<h2 id="org79dd8db">Install gnu-global on server</h2>
-<div class="outline-text-2" id="text-org79dd8db">
+<div id="outline-container-org64cafbd" class="outline-2">
+<h2 id="org64cafbd">Install gnu-global on server</h2>
+<div class="outline-text-2" id="text-org64cafbd">
 <p>
 If you have the admin rights on the server then you can follow the same instruction as of  <a href="https://www.spacemacs.org/layers/+tags/gtags/README.html">gtags-spacemacs</a> and everything works fine otherwise you need to install gnu-global by downloading the source and installing on the preferred location. Before installing gnu-global, first I had to install all the dependencies. The steps are as followed.
 </p>
@@ -135,9 +135,9 @@ Now we can install the gnu-global with following three commands.
 </div>
 </div>
 
-<div id="outline-container-orgcca7b1a" class="outline-2">
-<h2 id="orgcca7b1a">Creating TAGs and accessing from Emacs</h2>
-<div class="outline-text-2" id="text-orgcca7b1a">
+<div id="outline-container-orgbdbfb8e" class="outline-2">
+<h2 id="orgbdbfb8e">Creating TAGs and accessing from Emacs</h2>
+<div class="outline-text-2" id="text-orgbdbfb8e">
 <ul class="org-ul">
 <li>Once gnu-global is installed, I can go to any project directory and type <code>gtags --gtagslabel=pygments</code> to create gtags. In order to access them from Emacs, I installed <a href="https://github.com/emacsorphanage/helm-gtags.git">helm-gtags</a>.</li>
 
@@ -153,7 +153,9 @@ Now we can install the gnu-global with following three commands.
 </div>
 </div>
 <div id="postamble" class="status">
-<hr><footer><a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html"><img alt="Creative Commons License" style="border-width:0" src="https://www.gnu.org/graphics/gplv3-or-later-sm.png" /></a><br />This <a href="https://github.com/Blade6570/soumyatripathy">work</a> is licensed under a <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0</a>.</a><br />Created by Org version 9.3 with Emacs version 28. The stylesheet is modified from <a rel="license" href="https://github.com/jessekelly881/Imagine">Imagine.</a></a></footer>
+<p class="author">Author: Soumya Tripathy</p>
+<p class="date">Created: 2020-10-26 Mon 15:29</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

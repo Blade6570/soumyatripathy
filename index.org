@@ -30,6 +30,7 @@ I am a Ph.D student in the Faculty of Computing and Electrical Engineering, [[ht
 
   + [2020-08-22] Use hdf5 file format to store large image datasets for deep learning projects: [[file:hdf5_blog.org][Link]]
   + [2020-10-03] GTags in Emacs: [[file:./blog_gnuglobal/gnu_global.org][Link]]
+  + [2020-10-26] Org-search using Org-refile and Silver-searcher: [[file:blog_org_refile/org_refile.org][Link]]
 
   #+begin_src emacs-lisp :results output :exports results
   (setq org-html-postamble "<hr><footer><a rel=\"\license\" href=\"https://www.gnu.org/licenses/gpl-3.0.html\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://www.gnu.org/graphics/gplv3-or-later-sm.png\" /></a><br />This <a href=\"https://github.com/Blade6570/soumyatripathy\">work</a> is licensed under a <a rel=\"license\" href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License v3.0</a>.</a><br />Created by Org version 9.3 with Emacs version 28. The stylesheet is modified from <a rel=\"license\" href=\"https://github.com/jessekelly881/Imagine\">Imagine.</a></a></footer>")

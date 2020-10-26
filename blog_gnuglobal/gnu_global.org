@@ -1,4 +1,4 @@
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./imagine_dark.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./normalize.css" />
 #+OPTIONS: toc:nil num:nil html-style:nil
 #+HTML_HEAD: <base target="_blank">
 #+TITLE: GTags in Emacs
