@@ -22,7 +22,7 @@ I am a Ph.D student in the Faculty of Computing and Electrical Engineering, [[ht
 #+html: <p align="left"><a href="https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1"><img src="google_scholar.png" width=40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://github.com/Blade6570"><img src="github.png" width="40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://www.linkedin.com/in/soumya-tripathy-912572102//"><img src="linkedin.png" width="40" height="70"></a></p>
 * Recent Publications
 
-  - FACEGAN: Facial Attribute Controllable rEenactment GAN: /WACV-2021/
+  - FACEGAN: Facial Attribute Controllable rEenactment GAN: [[https://tutvision.github.io/FACEGAN/][Project]] /WACV-2021/
 
   * ICface: Interpretable and Controllable Face Reenactment Using GANs: [[https://tutvision.github.io/icface/][Project]] : /WACV-2020/
 
