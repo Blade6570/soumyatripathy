@@ -3,13 +3,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-26 Mon 15:30 -->
+<!-- 2020-12-13 Sun 17:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hdf5 file for large image datasets</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Soumya Tripathy" />
-<link rel="stylesheet" type="text/css" href="normalize.css" />
+<link rel="stylesheet" type="text/css" href="org.css" />
 <base target="_blank">
 <script type="text/javascript">
 /*
@@ -62,9 +62,9 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Hdf5 file for large image datasets</h1>
 
-<div id="outline-container-org59a7ef0" class="outline-2">
-<h2 id="org59a7ef0">Introduction</h2>
-<div class="outline-text-2" id="text-org59a7ef0">
+<div id="outline-container-orgdba5e71" class="outline-2">
+<h2 id="orgdba5e71">Introduction</h2>
+<div class="outline-text-2" id="text-orgdba5e71">
 <p>
 A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
 </p>
@@ -104,9 +104,9 @@ Although these steps are good for small datasets, the hdf5 file size increases r
 </div>
 </div>
 
-<div id="outline-container-org084ccb5" class="outline-2">
-<h2 id="org084ccb5">Modified steps</h2>
-<div class="outline-text-2" id="text-org084ccb5">
+<div id="outline-container-org8975d86" class="outline-2">
+<h2 id="org8975d86">Modified steps</h2>
+<div class="outline-text-2" id="text-org8975d86">
 <ul class="org-ul">
 <li>Read the image file as python binary file.</li>
 </ul>
@@ -173,9 +173,9 @@ image size: (502, 287)
 </div>
 </div>
 
-<div id="outline-container-org57ba3d0" class="outline-2">
-<h2 id="org57ba3d0">A practical example</h2>
-<div class="outline-text-2" id="text-org57ba3d0">
+<div id="outline-container-org7e8e663" class="outline-2">
+<h2 id="org7e8e663">A practical example</h2>
+<div class="outline-text-2" id="text-org7e8e663">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
 </p>
@@ -258,18 +258,18 @@ hf.visititems(func)  <span style="color: #579C4C;"># </span><span style="color: 
 </div>
 </div>
 
-<div id="outline-container-org6f703da" class="outline-2">
-<h2 id="org6f703da">Some issues [Solved]</h2>
-<div class="outline-text-2" id="text-org6f703da">
+<div id="outline-container-orgc76c0fe" class="outline-2">
+<h2 id="orgc76c0fe">Some issues [Solved]</h2>
+<div class="outline-text-2" id="text-orgc76c0fe">
 <ul class="org-ul">
 <li>In Pytorch I have noticed that parallel reading doesn't work (number of workers &gt; 1 in dataloader). <del>However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: <a href="http://docs.h5py.org/en/stable/swmr.html">SWMR</a></del>. Combining Pytorch dataloader and h5py was bit problematic but found a fix for that. There may be better solution that I am not aware of. In usual pytorch dataloader, I open the hdf5 file in the <code>__init__()</code> function and then read from them in <code>__getitem__()</code>. However in the case of <b>num of workers &gt; 1</b> it fails. So the fix is to open the hdf5 file inside the <code>__getitem__()</code> instead of <code>__init__()</code>. It solves the problem and runs with multiple number of workers.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgcf86e27" class="outline-2">
-<h2 id="orgcf86e27">Other useful resources</h2>
-<div class="outline-text-2" id="text-orgcf86e27">
+<div id="outline-container-orgb29d29c" class="outline-2">
+<h2 id="orgb29d29c">Other useful resources</h2>
+<div class="outline-text-2" id="text-orgb29d29c">
 <ol class="org-ol">
 <li><a href="https://discuss.pytorch.org/t/save-torch-tensors-as-hdf5/39556">In Pytorch discussion forum</a></li>
 </ol>
@@ -278,7 +278,7 @@ hf.visititems(func)  <span style="color: #579C4C;"># </span><span style="color: 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-10-26 Mon 15:30</p>
+<p class="date">Created: 2020-12-13 Sun 17:31</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
