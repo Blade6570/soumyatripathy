@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-25 Thu 18:38 -->
+<!-- 2021-03-25 Thu 18:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GTags for Python in Emacs</title>
@@ -62,9 +62,9 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">GTags for Python in Emacs</h1>
 
-<div id="outline-container-orga5f3844" class="outline-2">
-<h2 id="orga5f3844">Prologue</h2>
-<div class="outline-text-2" id="text-orga5f3844">
+<div id="outline-container-orgc447f07" class="outline-2">
+<h2 id="orgc447f07">Prologue</h2>
+<div class="outline-text-2" id="text-orgc447f07">
 <p>
 I usually code in Python and when I have a lot of functions in different files in a project then it is desirable to jump to the function definition from its identifier at point. In Emacs, Elpy has <code>(elpy-goto-definition)</code> with keybinding <code>Meta-.</code>, that sometimes works on local files and doesn't most of the time on remote files. There are some other good options like <code>elpy-rgrep-symbol</code>, <code>rgrep</code> but they are not that efficient. I have also tried <code>lsp-mode</code> with <i>mspyls</i> which works good in local but always complains about <code>server-time-elapsed</code> over tramp. As I work mostly on my servers, it is really important for me to get a reliable tool for this feature.
 </p>
@@ -75,15 +75,14 @@ I came across  <a href="https://www.gnu.org/software/global/">gnu-global</a> on 
 </div>
 </div>
 
-<div id="outline-container-orgee98c39" class="outline-2">
-<h2 id="orgee98c39">Install gnu-global on server</h2>
-<div class="outline-text-2" id="text-orgee98c39">
+<div id="outline-container-org9b048bb" class="outline-2">
+<h2 id="org9b048bb">Install gnu-global on server</h2>
+<div class="outline-text-2" id="text-org9b048bb">
 <p>
 If you have the admin rights on the server then you can follow the same instruction as of <a href="https://www.spacemacs.org/layers/+tags/gtags/README.html">gtags-spacemacs</a> and everything works fine. Without the <code>sudo</code> rights, you need to do the following steps to install it properly. Before installing gnu-global, first I had to install all the dependencies like,
 </p>
 
-<ol class="org-ol">
-<li><p>
+<p>
 <b>ctags</b>:
 </p>
 <div class="org-src-container">
@@ -95,12 +94,10 @@ If you have the admin rights on the server then you can follow the same instruct
 - make install
 - cd ..
 </pre>
-</div></li>
-</ol>
+</div>
 
 
-<ol class="org-ol">
-<li><p>
+<p>
 <b>gperf</b>:
 </p>
 <div class="org-src-container">
@@ -112,12 +109,10 @@ If you have the admin rights on the server then you can follow the same instruct
 - make install
 - cd ..
 </pre>
-</div></li>
-</ol>
+</div>
 
 
-<ol class="org-ol">
-<li><p>
+<p>
 <b>libtool</b>:
 </p>
 <div class="org-src-container">
@@ -129,9 +124,9 @@ If you have the admin rights on the server then you can follow the same instruct
 - make install
 - cd ..
 </pre>
-</div></li>
+</div>
 
-<li><p>
+<p>
 <b>texinfo</b>:
 </p>
 <div class="org-src-container">
@@ -143,8 +138,7 @@ If you have the admin rights on the server then you can follow the same instruct
 - make install
 - cd ..
 </pre>
-</div></li>
-</ol>
+</div>
 
 <p>
 I added the installation path (<code>path/to/install/bin</code>) to the <code>.bashrc</code> to access them from the terminal directly.
@@ -174,9 +168,9 @@ Finally, install the <code>gnu-global</code> with the following three commands.
 </div>
 </div>
 
-<div id="outline-container-orgaf001a9" class="outline-2">
-<h2 id="orgaf001a9">Creating tags and accessing them from Emacs</h2>
-<div class="outline-text-2" id="text-orgaf001a9">
+<div id="outline-container-org3379c67" class="outline-2">
+<h2 id="org3379c67">Creating tags and accessing them from Emacs</h2>
+<div class="outline-text-2" id="text-org3379c67">
 <ul class="org-ul">
 <li>Once gnu-global is installed, I can go to any project directory and type <code>gtags --gtagslabel=pygments</code> to create gtags. In order to access them from the Emacs, I installed <a href="https://github.com/emacsorphanage/helm-gtags.git">helm-gtags</a>.</li>
 
@@ -184,9 +178,9 @@ Finally, install the <code>gnu-global</code> with the following three commands.
 </ul>
 </div>
 
-<div id="outline-container-org711871c" class="outline-3">
-<h3 id="org711871c">Using helm-gtags in multiple server simulataneously</h3>
-<div class="outline-text-3" id="text-org711871c">
+<div id="outline-container-org2a057b6" class="outline-3">
+<h3 id="org2a057b6">Using helm-gtags in multiple server simulataneously</h3>
+<div class="outline-text-3" id="text-org2a057b6">
 <ul class="org-ul">
 <li>When you have multiple servers open, helm-gtags can use <code>gnu-global</code> in one of the server and will complain about the <code>gnu-global</code> path for all others. It is because the <code>tramp-remote-path</code> needs to be forced updated when you switch the server. It can be done by calling <code>tramp-cleanup-all-connections</code> from <code>M-x</code> and then using <code>helm-gtags</code></li>
 <li>Another elegant solution is to switch the <code>tramp-remote-path</code> automatically when we switch to the buffer of another server. I have given an example for two servers with the names <code>puhti</code> and <code>narvi</code> and can be extended for more than two.</li>
@@ -218,7 +212,7 @@ Finally, install the <code>gnu-global</code> with the following three commands.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2021-03-25 Thu 18:38</p>
+<p class="date">Created: 2021-03-25 Thu 18:42</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
