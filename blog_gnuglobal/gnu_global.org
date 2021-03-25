@@ -1,7 +1,7 @@
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./org.css" />
 #+OPTIONS: toc:nil num:nil html-style:nil
 #+HTML_HEAD: <base target="_blank">
-#+TITLE: GTags in Emacs
+#+TITLE: GTags for Python in Emacs
 
 * Prologue
 
@@ -16,64 +16,94 @@
     1. *ctags*:
        #+BEGIN_SRC bash
        - git clone https://github.com/universal-ctags/ctags.git
+       - cd ctags
        - bash autogen.sh
-       - ./configure --prefix=/path/to/install
-       - keep the path-to-install same for all the rest of the packages
+       - ./configure --prefix=/path/to/install (keep the path-to-install same for all the rest of the packages)
        - make
        - make install
+       - cd ..
        #+END_SRC
 
 
     2. *gperf*:
        #+BEGIN_SRC bash
        - wget https://ftp.gnu.org/pub/gnu/gperf/gperf-3.1.tar.gz
+       - tar -xf gperf-3.1.tar.gz
+       - cd gperf-3.1
        - ./configure --prefix=/path/to/install (keep it same as of ctags)
        - make
        - make install
+       - cd ..
        #+END_SRC
 
 
     3. *libtool*:
        #+BEGIN_SRC bash
-
        - wget https://ftp.gnu.org/gnu/libtool/libtool-2.4.2.tar.gz (this version is important)
+       - tar -xf libtool-2.4.2.tar.gz
+       - cd libtool-2.4.2
        - ./configure --prefix=/path/to/install (keep it same as of ctags)
        - make
        - make install
-
+       - cd ..
        #+END_SRC
 
     4. *texinfo*:
        #+BEGIN_SRC bash
-
        - wget https://ftp.gnu.org/gnu/texinfo/texinfo-6.7.tar.xz
+       - tar -xf texinfo-6.7.tar.xz
+       - cd texinfo-6.7
        - ./configure --prefix=/path/to/install (keep it same as of ctags)
        - make
        - make install
-
+       - cd ..
        #+END_SRC
 
-I added the installation path (~path-to-install/bin~) to the ~.bashrc~ to access them from the terminal directly.
+I added the installation path (~path/to/install/bin~) to the ~.bashrc~ to access them from the terminal directly.
 
 #+BEGIN_SRC bash
-export PATH="/projappl/project_2001838/bin:$PATH"
+export PATH="/path/to/install/bin:$PATH"
 #+END_SRC
 
-Finally, install the gnu-global with following three commands.
+Finally, install the ~gnu-global~ with the following three commands.
 
        #+BEGIN_SRC bash
-
-       - ./configure --with-exuberant-ctags=/path/to/install/bin/ctags --prefix=/path/to/install/
+       - wget https://ftp.gnu.org/pub/gnu/global/global-6.6.tar.gz
+       - tar -xf global-6.6.tar.gz
+       - cd global-6.6
+       - ./configure --with-exuberant-ctags=/path/to/install/bin/ctags --prefix=/path/to/install/  (keep it same as ctags)
        - make
        - make install
-
+       - cp gtags.conf ~/.globalrc (copy the config to the globalrc)
+       - echo export GTAGSLABEL=pygments >> .profile
+       - cd ..
        #+END_SRC
 
-* Creating TAGs and accessing from Emacs
+* Creating tags and accessing them from Emacs
 
  - Once gnu-global is installed, I can go to any project directory and type ~gtags --gtagslabel=pygments~ to create gtags. In order to access them from the Emacs, I installed [[https://github.com/emacsorphanage/helm-gtags.git][helm-gtags]].
 
- - Before using ~helm-gtags~ over tramp, I need to tell the tramp the path of gnu-global on the server. I have done that by adding ~(add-to-list 'tramp-remote-path "/path/to/install/bin")~  to my ~init.el~. Now you are ready to go. The screenshot shows it in action. We can go to any function identifier and then it can take us to the function definition even defined in another file.
-#+attr_html: :width 800px
+ - Before using ~helm-gtags~ over tramp, I need to tell the tramp the path of gnu-global on the server. I have done that by adding ~(add-to-list 'tramp-remote-path "/path/to/install/bin")~  to my ~init.el~. If you have multiple severs, then install gnu-global in each of them and add the path to the ~tramp-remote-path~ as mention earlier. Now you are ready to go. The screenshot shows it in action. We can go to any function identifier and then it can take us to the function definition even defined in another file.
+
+** Using helm-gtags in multiple server simulataneously
+
+   - When you have multiple servers open, helm-gtags can use ~gnu-global~ in one of the server and will complain about the ~gnu-global~ path for all others. It is because the ~tramp-remote-path~ needs to be forced updated when you switch the server. It can be done by calling ~tramp-cleanup-all-connections~ from ~M-x~ and then using ~helm-gtags~
+   - Another elegant solution is to switch the ~tramp-remote-path~ automatically when we switch to the buffer of another server. I have given an example for two servers with the names ~puhti~ and ~narvi~ and can be extended for more than two.
+
+#+BEGIN_SRC emacs-lisp
+(connection-local-set-profile-variables 'remote-path-puhti
+   '((tramp-remote-path . ("/projappl/project_2000936/miniconda3/bin"  "/projappl/project_2001838/bin" tramp-default-remote-path)))) ;"/projappl/project_2001838/bin": gnu_global is installed here
+
+(connection-local-set-profile-variables 'remote-path-narvi
+   '((tramp-remote-path . ("/home/tripathy/miniconda3/bin" "/home/tripathy/applications/bin" tramp-default-remote-path)))) ; "/home/tripathy/applications/bin": gnu_global installed here
+;"/home/tripathy/miniconda3/bin":  anaconda path for other packages
+(connection-local-set-profiles
+   '(:application tramp :machine "puhti") 'remote-path-puhti)
+(connection-local-set-profiles
+   '(:application tramp :machine "narvi") 'remote-path-narvi)
+#+END_SRC
+
+
+#+attr_html: :width 820px :height 800
 #+ATTR_HTML: :style :left;margin:0px 90px 0px 60px;
 [[file:./demo.gif]]

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-13 Sun 17:27 -->
+<!-- 2021-03-25 Thu 18:38 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GTags in Emacs</title>
+<title>GTags for Python in Emacs</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Soumya Tripathy" />
 <link rel="stylesheet" type="text/css" href="./org.css" />
@@ -60,11 +60,11 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">GTags in Emacs</h1>
+<h1 class="title">GTags for Python in Emacs</h1>
 
-<div id="outline-container-org5c4853e" class="outline-2">
-<h2 id="org5c4853e">Prologue</h2>
-<div class="outline-text-2" id="text-org5c4853e">
+<div id="outline-container-orga5f3844" class="outline-2">
+<h2 id="orga5f3844">Prologue</h2>
+<div class="outline-text-2" id="text-orga5f3844">
 <p>
 I usually code in Python and when I have a lot of functions in different files in a project then it is desirable to jump to the function definition from its identifier at point. In Emacs, Elpy has <code>(elpy-goto-definition)</code> with keybinding <code>Meta-.</code>, that sometimes works on local files and doesn't most of the time on remote files. There are some other good options like <code>elpy-rgrep-symbol</code>, <code>rgrep</code> but they are not that efficient. I have also tried <code>lsp-mode</code> with <i>mspyls</i> which works good in local but always complains about <code>server-time-elapsed</code> over tramp. As I work mostly on my servers, it is really important for me to get a reliable tool for this feature.
 </p>
@@ -75,9 +75,9 @@ I came across  <a href="https://www.gnu.org/software/global/">gnu-global</a> on 
 </div>
 </div>
 
-<div id="outline-container-org4479af6" class="outline-2">
-<h2 id="org4479af6">Install gnu-global on server</h2>
-<div class="outline-text-2" id="text-org4479af6">
+<div id="outline-container-orgee98c39" class="outline-2">
+<h2 id="orgee98c39">Install gnu-global on server</h2>
+<div class="outline-text-2" id="text-orgee98c39">
 <p>
 If you have the admin rights on the server then you can follow the same instruction as of <a href="https://www.spacemacs.org/layers/+tags/gtags/README.html">gtags-spacemacs</a> and everything works fine. Without the <code>sudo</code> rights, you need to do the following steps to install it properly. Before installing gnu-global, first I had to install all the dependencies like,
 </p>
@@ -88,11 +88,12 @@ If you have the admin rights on the server then you can follow the same instruct
 </p>
 <div class="org-src-container">
 <pre class="src src-bash">- git clone https://github.com/universal-ctags/ctags.git
+- cd ctags
 - bash autogen.sh
-- ./configure --prefix=/path/to/install
-- keep the path-to-install same for all the rest of the packages
+- ./configure --prefix=/path/to/install (keep the path-to-install same for all the rest of the packages)
 - make
 - make install
+- cd ..
 </pre>
 </div></li>
 </ol>
@@ -104,9 +105,12 @@ If you have the admin rights on the server then you can follow the same instruct
 </p>
 <div class="org-src-container">
 <pre class="src src-bash">- wget https://ftp.gnu.org/pub/gnu/gperf/gperf-3.1.tar.gz
+- tar -xf gperf-3.1.tar.gz
+- cd gperf-3.1
 - ./configure --prefix=/path/to/install (keep it same as of ctags)
 - make
 - make install
+- cd ..
 </pre>
 </div></li>
 </ol>
@@ -117,12 +121,13 @@ If you have the admin rights on the server then you can follow the same instruct
 <b>libtool</b>:
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">
-- wget https://ftp.gnu.org/gnu/libtool/libtool-2.4.2.tar.gz (this version is important)
+<pre class="src src-bash">- wget https://ftp.gnu.org/gnu/libtool/libtool-2.4.2.tar.gz (this version is important)
+- tar -xf libtool-2.4.2.tar.gz
+- cd libtool-2.4.2
 - ./configure --prefix=/path/to/install (keep it same as of ctags)
 - make
 - make install
-
+- cd ..
 </pre>
 </div></li>
 
@@ -130,59 +135,90 @@ If you have the admin rights on the server then you can follow the same instruct
 <b>texinfo</b>:
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">
-- wget https://ftp.gnu.org/gnu/texinfo/texinfo-6.7.tar.xz
+<pre class="src src-bash">- wget https://ftp.gnu.org/gnu/texinfo/texinfo-6.7.tar.xz
+- tar -xf texinfo-6.7.tar.xz
+- cd texinfo-6.7
 - ./configure --prefix=/path/to/install (keep it same as of ctags)
 - make
 - make install
-
+- cd ..
 </pre>
 </div></li>
 </ol>
 
 <p>
-I added the installation path (<code>path-to-install/bin</code>) to the <code>.bashrc</code> to access them from the terminal directly.
+I added the installation path (<code>path/to/install/bin</code>) to the <code>.bashrc</code> to access them from the terminal directly.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash"><span style="color: #C586C0;">export</span> <span style="color: #85DDFF;">PATH</span>=<span style="color: #DB8E73;">"/projappl/project_2001838/bin:$PATH"</span>
+<pre class="src src-bash"><span style="color: #C586C0;">export</span> <span style="color: #85DDFF;">PATH</span>=<span style="color: #DB8E73;">"/path/to/install/bin:$PATH"</span>
 </pre>
 </div>
 
 <p>
-Finally, install the gnu-global with following three commands.
+Finally, install the <code>gnu-global</code> with the following three commands.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">
-- ./configure --with-exuberant-ctags=/path/to/install/bin/ctags --prefix=/path/to/install/
+<pre class="src src-bash">- wget https://ftp.gnu.org/pub/gnu/global/global-6.6.tar.gz
+- tar -xf global-6.6.tar.gz
+- cd global-6.6
+- ./configure --with-exuberant-ctags=/path/to/install/bin/ctags --prefix=/path/to/install/  (keep it same as ctags)
 - make
 - make install
-
+- cp gtags.conf ~/.globalrc (copy the config to the globalrc)
+- echo export <span style="color: #85DDFF;">GTAGSLABEL</span>=pygments &gt;&gt; .profile
+- cd ..
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org13e7be4" class="outline-2">
-<h2 id="org13e7be4">Creating TAGs and accessing from Emacs</h2>
-<div class="outline-text-2" id="text-org13e7be4">
+<div id="outline-container-orgaf001a9" class="outline-2">
+<h2 id="orgaf001a9">Creating tags and accessing them from Emacs</h2>
+<div class="outline-text-2" id="text-orgaf001a9">
 <ul class="org-ul">
 <li>Once gnu-global is installed, I can go to any project directory and type <code>gtags --gtagslabel=pygments</code> to create gtags. In order to access them from the Emacs, I installed <a href="https://github.com/emacsorphanage/helm-gtags.git">helm-gtags</a>.</li>
 
-<li>Before using <code>helm-gtags</code> over tramp, I need to tell the tramp the path of gnu-global on the server. I have done that by adding <code>(add-to-list 'tramp-remote-path "/path/to/install/bin")</code>  to my <code>init.el</code>. Now you are ready to go. The screenshot shows it in action. We can go to any function identifier and then it can take us to the function definition even defined in another file.</li>
+<li>Before using <code>helm-gtags</code> over tramp, I need to tell the tramp the path of gnu-global on the server. I have done that by adding <code>(add-to-list 'tramp-remote-path "/path/to/install/bin")</code>  to my <code>init.el</code>. If you have multiple severs, then install gnu-global in each of them and add the path to the <code>tramp-remote-path</code> as mention earlier. Now you are ready to go. The screenshot shows it in action. We can go to any function identifier and then it can take us to the function definition even defined in another file.</li>
+</ul>
+</div>
+
+<div id="outline-container-org711871c" class="outline-3">
+<h3 id="org711871c">Using helm-gtags in multiple server simulataneously</h3>
+<div class="outline-text-3" id="text-org711871c">
+<ul class="org-ul">
+<li>When you have multiple servers open, helm-gtags can use <code>gnu-global</code> in one of the server and will complain about the <code>gnu-global</code> path for all others. It is because the <code>tramp-remote-path</code> needs to be forced updated when you switch the server. It can be done by calling <code>tramp-cleanup-all-connections</code> from <code>M-x</code> and then using <code>helm-gtags</code></li>
+<li>Another elegant solution is to switch the <code>tramp-remote-path</code> automatically when we switch to the buffer of another server. I have given an example for two servers with the names <code>puhti</code> and <code>narvi</code> and can be extended for more than two.</li>
 </ul>
 
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(connection-local-set-profile-variables 'remote-path-puhti
+   '((tramp-remote-path . (<span style="color: #DB8E73;">"/projappl/project_2000936/miniconda3/bin"</span>  <span style="color: #DB8E73;">"/projappl/project_2001838/bin"</span> tramp-default-remote-path)))) <span style="color: #579C4C;">;</span><span style="color: #579C4C;">"/projappl/project_2001838/bin": gnu_global is installed here</span>
+
+(connection-local-set-profile-variables 'remote-path-narvi
+   '((tramp-remote-path . (<span style="color: #DB8E73;">"/home/tripathy/miniconda3/bin"</span> <span style="color: #DB8E73;">"/home/tripathy/applications/bin"</span> tramp-default-remote-path)))) <span style="color: #579C4C;">; </span><span style="color: #579C4C;">"/home/tripathy/applications/bin": gnu_global installed here</span>
+<span style="color: #579C4C;">;</span><span style="color: #579C4C;">"/home/tripathy/miniconda3/bin":  anaconda path for other packages</span>
+(connection-local-set-profiles
+   '(<span style="color: #C586C0;">:application</span> tramp <span style="color: #C586C0;">:machine</span> <span style="color: #DB8E73;">"puhti"</span>) 'remote-path-puhti)
+(connection-local-set-profiles
+   '(<span style="color: #C586C0;">:application</span> tramp <span style="color: #C586C0;">:machine</span> <span style="color: #DB8E73;">"narvi"</span>) 'remote-path-narvi)
+</pre>
+</div>
+
+
+
 <div class="figure">
-<p><img src="./demo.gif" alt="demo.gif" style=":left;margin:0px 90px 0px 60px;" width="800px" />
+<p><img src="./demo.gif" alt="demo.gif" style=":left;margin:0px 90px 0px 60px;" width="820px" height="800" />
 </p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-12-13 Sun 17:27</p>
+<p class="date">Created: 2021-03-25 Thu 18:38</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
