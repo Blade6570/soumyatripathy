@@ -19,7 +19,7 @@ I am a Ph.D student in the Faculty of Computing and Electrical Engineering, [[ht
 
 * Find more about my research
 
-#+html: <p align="left"><a href="https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1"><img src="google_scholar.png" width=40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://github.com/Blade6570"><img src="github.png" width="40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://www.linkedin.com/in/soumya-tripathy-912572102//"><img src="linkedin.png" width="40" height="70"></a></p>
+#+html: <p align="left"><a href="https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1"><img src="google_scholar.png" width=40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://github.com/Blade6570"><img src="github.png" width="40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://www.linkedin.com/in/soumya-tripathy-912572102//"><img src="linkedin.png" width="40" height="30"></a></p>
 * Recent Publications
 
   - Single source one shot reenactment using weighted motion from paired feature points: [[https://arxiv.org/abs/2104.03117][Paper]] [[https://www.youtube.com/watch?v=fJn5WU01ITc][Video]]
