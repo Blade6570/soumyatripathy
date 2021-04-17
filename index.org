@@ -23,7 +23,7 @@ I am a Ph.D student in the Faculty of Computing and Electrical Engineering, [[ht
 
 * Recent Publications
 
-  - Single source one shot reenactment using weighted motion from paired feature points: [[https://arxiv.org/abs/2104.03117][Paper]] [[https://www.youtube.com/watch?v=fJn5WU01ITc][Video]]
+  - Single source one shot reenactment using weighted motion from paired feature points: [[https://blade6570.github.io/Weighted-motion-From-Paired-Feature-Points/][Project]]
 
   - FACEGAN: Facial Attribute Controllable rEenactment GAN: [[https://tutvision.github.io/FACEGAN/][Project]] /WACV-2021/
 
