@@ -21,6 +21,10 @@ I am a Ph.D student in the Faculty of Computing and Electrical Engineering, [[ht
 
 #+html: <p align="left"><a href="https://scholar.google.fi/citations?user=E74IqRQAAAAJ&hl=en&authuser=1"><img src="google_scholar.png" width=40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://github.com/Blade6570"><img src="github.png" width="40" height="70"></a>&nbsp;&nbsp; &nbsp; &nbsp; <a href="https://www.linkedin.com/in/soumya-tripathy-912572102/"><img src="linkedin.png" width="40" height="30"></a>&nbsp;&nbsp; &nbsp; &nbsp; </p>
 
+* Updates
+
+  - [29th April 2021] Received Encouragement grant by the Finnish Foundation for Technology Promotion. \\
+    /(Granted for the research topic "Learning based conditional image generation and manipulation using deep neural networks".)/
 * Recent Publications
 
   - Single source one shot reenactment using weighted motion from paired feature points: [[https://blade6570.github.io/Weighted-motion-From-Paired-Feature-Points/][Project]]
