@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Share Tech Mono&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Courier Prime&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Overpass Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Silkscreen');
+@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
 /* Variables. Feel free to edit these! */
 :root {
     --color-primary: #028090;
@@ -14,13 +14,13 @@
     --color-special-todo: #790604;
 
     /*--font-normal: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman";*/
-    --font-normal: 'Courier Prime', Shadows;
-    --font-headings: 'Overpass Mono', cursive;
+    --font-normal: 'VT323', normal;
+    --font-headings: 'Silkscreen', normal;
 
     --font-size-1: 33.57px;
     --font-size-2: 26.86px;
     --font-size-3: 21.48px;
-    --font-size-4: 18.19px;
+    --font-size-4: 25.19px;
 
     --font-size-small: 18px;
 }
@@ -33,15 +33,23 @@
 
 /* Remove outer padding */
 html, body{
-    margin: 10;
-    padding: 10;
+    margin: 500x;
+    padding: 500x;
+     max-width: 1300px;
 }
 
 /* Heading styles */
 h2, h3, h4, h5, h6{
-    color: var(--color-hard-black);
-    margin: 0;
-    padding: 0;
+    a{
+        color: black;
+        text-decoration: none;
+    }
+    float: right;
+    width: 90%;
+    margin-left: 10x;
+    padding: 10x;
+    color: inherit;
+    text-decoration: none;
     font-family: var(--font-headings)
 }
 
@@ -58,22 +66,28 @@ h1 > .subtitle{
 }
 
 h1{
-    color: var(--color-hard-black);
+    color: black;
     margin: 100;
     padding: 100;
+    color: inherit;
+    text-decoration: none;
     font-family: var(--font-headings)
 }
 
 /* Normal text style(including code) */
 p, pre, ol, ul, table, code{
-    color: #444;
+    color: black;
     font-size: var(--font-size-4);
-    font-family: var(--font-normal)
+    font-family: var(--font-normal);
+    margin-left: 10x;
+    float: right;
+    width: 90%;
 }
 
 /* Better anchor tags */
 a{
-    color: inherit;
+    color: RoyalBlue;
+    text-decoration: none;
 }
 
 a:hover{
@@ -91,7 +105,7 @@ a:hover{
 }
 
 .title{
-   padding: 2vh 30vw;
+   padding: 2vh 9vw;
 }
 
 
