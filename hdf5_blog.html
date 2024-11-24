@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-24 Sun 13:18 -->
+<!-- 2024-11-24 Sun 14:26 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Optimizing Image Data Management in Deep Learning Workflows</title>
@@ -17,9 +17,9 @@
 <br />
 <span class="subtitle">Hdf5 files for large image datasets</span>
 </h1>
-<div id="outline-container-orgce25e1c" class="outline-2">
-<h2 id="orgce25e1c"><a href="#orgce25e1c">Introduction</a></h2>
-<div class="outline-text-2" id="text-orgce25e1c">
+<div id="outline-container-orgd251102" class="outline-2">
+<h2 id="orgd251102"><a href="#orgd251102">Introduction</a></h2>
+<div class="outline-text-2" id="text-orgd251102">
 <p>
 A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
 </p>
@@ -58,9 +58,9 @@ While these steps work well for small datasets, the size of the HDF5 file can gr
 </p>
 </div>
 </div>
-<div id="outline-container-org8e0c1df" class="outline-2">
-<h2 id="org8e0c1df"><a href="#org8e0c1df">Modified steps</a></h2>
-<div class="outline-text-2" id="text-org8e0c1df">
+<div id="outline-container-org48de919" class="outline-2">
+<h2 id="org48de919"><a href="#org48de919">Modified steps</a></h2>
+<div class="outline-text-2" id="text-org48de919">
 <ol class="org-ol">
 <li>Read the image file as python binary file.</li>
 </ol>
@@ -126,9 +126,9 @@ Now it is clear that the modified steps consume less storage space and also reco
 </p>
 </div>
 </div>
-<div id="outline-container-org599a9b3" class="outline-2">
-<h2 id="org599a9b3"><a href="#org599a9b3">A practical example</a></h2>
-<div class="outline-text-2" id="text-org599a9b3">
+<div id="outline-container-org48c0848" class="outline-2">
+<h2 id="org48c0848"><a href="#org48c0848">A practical example</a></h2>
+<div class="outline-text-2" id="text-org48c0848">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
 </p>
@@ -221,9 +221,9 @@ hf.visititems(func)  <span style="color: #595959;"># </span><span style="color: 
 </div>
 </div>
 </div>
-<div id="outline-container-org78832ed" class="outline-2">
-<h2 id="org78832ed"><a href="#org78832ed">Some issues [Solved]</a></h2>
-<div class="outline-text-2" id="text-org78832ed">
+<div id="outline-container-orgeab339c" class="outline-2">
+<h2 id="orgeab339c"><a href="#orgeab339c">Some issues [Solved]</a></h2>
+<div class="outline-text-2" id="text-orgeab339c">
 <p>
 In PyTorch, I’ve noticed that parallel reading (using num_workers &gt; 1 in the DataLoader) doesn’t work seamlessly when dealing with HDF5 files. However, this issue is straightforward to address with the latest versions of h5py. Although I haven’t tried it personally, the SWMR documentation provides helpful guidance.
 </p>
@@ -237,9 +237,9 @@ In a typical PyTorch DataLoader, the HDF5 file is opened in the __init__() funct
 </p>
 </div>
 </div>
-<div id="outline-container-org79ddd22" class="outline-2">
-<h2 id="org79ddd22"><a href="#org79ddd22">Other useful resources</a></h2>
-<div class="outline-text-2" id="text-org79ddd22">
+<div id="outline-container-org2a43f99" class="outline-2">
+<h2 id="org2a43f99"><a href="#org2a43f99">Other useful resources</a></h2>
+<div class="outline-text-2" id="text-org2a43f99">
 <ol class="org-ol">
 <li><a href="https://discuss.pytorch.org/t/save-torch-tensors-as-hdf5/39556">In Pytorch discussion forum</a></li>
 </ol>
@@ -248,7 +248,7 @@ In a typical PyTorch DataLoader, the HDF5 file is opened in the __init__() funct
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2024-11-24 Sun 13:18</p>
+<p class="date">Created: 2024-11-24 Sun 14:26</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
