@@ -1,15 +1,16 @@
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
 #+OPTIONS: toc:nil num:nil html-style:nil
-#+HTML_HEAD: <base target="_blank">
-#+TITLE: Hdf5 file for large image datasets
+#+OPTIONS: ^:nil
+#+TITLE: Optimizing Image Data Management in Deep Learning Workflows
+#+SUBTITLE: Hdf5 files for large image datasets
 
 * Introduction
 
 A simple search on [[https://duckduckgo.com/][duckduckgo]] yields a number of tutorials on creating hdf5 files using python package [[http://www.h5py.org/][h5py]]. The common approach involves the following steps:
 
- 1. Read the image using [[http://pythonware.com/products/pil/][PIL]] package. (/you can use your favorite package instead of PIL/)
- 2. Convert it to numpy array.
- 3. Store in hdf5 file using ~create_dataset~ or you can do fancy things like ~groups~ and ~subgroups~.
+      1) Read the image using [[http://pythonware.com/products/pil/][PIL]] package. (/you can use your favorite package instead of PIL/)
+      2) Convert it to numpy array.
+      3) Store in hdf5 file using create_dataset or you can do fancy things like groups and subgroups.
 
 #+BEGIN_SRC python :results output :exports both :eval no
 import h5py
@@ -31,11 +32,11 @@ print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 : image size: 23986 bytes
 : hdf5 file size: 434270 bytes
 
-Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes ~100x~ times more space than the original dataset. This solely happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can follow the steps as given below.
+While these steps work well for small datasets, the size of the HDF5 file can grow significantly as the number of images increases. In some cases, I’ve observed the HDF5 file taking up to 100 times more space than the original dataset. This occurs because NumPy arrays require more storage than the original image files. If the server has storage limitations, you may want to consider the alternative steps outlined below.
 
 * Modified steps
 
- - Read the image file as python binary file.
+1. Read the image file as python binary file.
 
 #+BEGIN_SRC python :results output :exports both :eval no
 import h5py
@@ -59,7 +60,7 @@ print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 : image size: 23986 bytes
 : hdf5 file size: 26034 bytes
 
- - In order to read back the image as numpy array use the following snippet.
+2. [@2] In order to read back the image as numpy array use the following snippet.
 
 #+BEGIN_SRC python :results output :exports both :eval no
 import h5py
@@ -85,7 +86,7 @@ img.show()
 : Keys: default
 : image size: (502, 287)
 
- - Now it is clear that the modified steps consume less storage space and also recovers the image as required.
+Now it is clear that the modified steps consume less storage space and also recovers the image as required.
 
 * A practical example
 
@@ -110,74 +111,77 @@ A
 #+RESULTS:
 [[file:tree.png]]
 
- -  I have to figure it out to store the images in to a *hdf5* file but somehow need to retrieve the file structure. In this way I can load the images from hdf5 file with their paths.
-
- -  The following steps are mostly tailored to address my requirements, but these components can be customized to address other scenarios.
+I need to determine how to store images in an HDF5 file while preserving the file structure. This approach will allow me to load images from the HDF5 file along with their respective paths. The following steps are specifically designed to meet my requirements but can be customized to suit other use cases.
 
 #+BEGIN_SRC python
-import h5py
-import numpy as np
-import os
+  import h5py
+  import numpy as np
+  import os
 
-base_path = './'  # dataset path
+  base_path = './'  # dataset path
 
-save_path = './test.hdf5'  # path to save the hdf5 file
+  save_path = './test.hdf5'  # path to save the hdf5 file
 
-hf = h5py.File(save_path, 'a')  # open the file in append mode
+  hf = h5py.File(save_path, 'a')  # open the file in append mode
 
-for i in os.listdir(base_path):   # read all the As'
-    vid_name = os.path.join(base_path, i)
-    grp = hf.create_group(vid_name)  # create a hdf5 group.  each group is one 'A'
+  for i in os.listdir(base_path):   # read all the As'
+      vid_name = os.path.join(base_path, i)
+      grp = hf.create_group(vid_name)  # create a hdf5 group.  each group is one 'A'
 
-    for j in os.listdir(vid_name):  # read all as' inside A
-	track = os.path.join(vid_name, j)
+      for j in os.listdir(vid_name):  # read all as' inside A
+  	track = os.path.join(vid_name, j)
 
-	subgrp = grp.create_group(j)  # create a subgroup for the above created group. each small
-	                              # a is one subgroup
+  	subgrp = grp.create_group(j)  # create a subgroup for the above created group. each small
+  	                              # a is one subgroup
 
-	for k in os.listdir(track):   # find all images inside a.
-	    img_path = os.path.join(track, k)
+  	for k in os.listdir(track):   # find all images inside a.
+  	    img_path = os.path.join(track, k)
 
-	    with open(img_path, 'rb') as img_f:  # open images as python binary
-		binary_data = img_f.read()
+  	    with open(img_path, 'rb') as img_f:  # open images as python binary
+  		binary_data = img_f.read()
 
-	    binary_data_np = np.asarray(binary_data)
+  	    binary_data_np = np.asarray(binary_data)
 
-	    dset = subgrp.create_dataset(k, data=binary_data_np) # save it in the subgroup. each a-subgroup contains all the images.
+  	    dset = subgrp.create_dataset(k, data=binary_data_np) # save it in the subgroup.
+                                                             #each subgroup contains all the images.
 
-hf.close()
+  hf.close()
 
 #+END_SRC
 
- - The question is how to get the names of all the groups and subgroups from the hdf5 file? The h5py package has features like ~visititems~ to help us access back the image files. Lets see the following steps in continuation to the above steps:
+The question is: how can we retrieve the names of all the groups and subgroups from an HDF5 file? The *h5py* package provides useful features, such as "visititems," to help access the stored image files. Let’s explore the following steps as a continuation of the previous ones.
 
 #+BEGIN_SRC python
 
-data = []  # list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. These are basically keys to access our image data.
+  data = []  # list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. 
+             #These are basically keys to access our image data.
 
-group = [] # list all groups and subgroups in hdf5 file
+  group = [] # list all groups and subgroups in hdf5 file
 
-def func(name, obj):     # function to recursively store all the keys
-    if isinstance(obj, h5py.Dataset):
-	data1.append(name)
-    elif isinstance(obj, h5py.Group):
-	group1.append(name)
+  def func(name, obj):     # function to recursively store all the keys
+      if isinstance(obj, h5py.Dataset):
+  	data1.append(name)
+      elif isinstance(obj, h5py.Group):
+  	group1.append(name)
 
-hf = h5py.File(save_path, 'r')
-hf.visititems(func)  # this is the operation we are talking about.
+  hf = h5py.File(save_path, 'r')
+  hf.visititems(func)  # this is the operation we are talking about.
 
-# Now lets read the image files in their proper format to use it for our training.
+  # Now lets read the image files in their proper format to use it for our training.
 
-for j in data:
-    kk = np.array(hf[j])
-    img = Image.open(io.BytesIO(kk)) # our image file
-    print('image size:', img.size)
+  for j in data:
+      kk = np.array(hf[j])
+      img = Image.open(io.BytesIO(kk)) # our image file
+      print('image size:', img.size)
 #+END_SRC
 
 * Some issues [Solved]
 
- - In Pytorch I have noticed that parallel reading doesn't work (number of workers > 1 in dataloader). +However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: [[http://docs.h5py.org/en/stable/swmr.html][SWMR]]+. Combining Pytorch dataloader and h5py was bit problematic but found a fix for that. There may be better solution that I am not aware of. In usual pytorch dataloader, I open the hdf5 file in the =__init__()= function and then read from them in =__getitem__()=. However in the case of *num of workers > 1* it fails. So the fix is to open the hdf5 file inside the =__getitem__()= instead of =__init__()=. It solves the problem and runs with multiple number of workers.
+In PyTorch, I’ve noticed that parallel reading (using num_workers > 1 in the DataLoader) doesn’t work seamlessly when dealing with HDF5 files. However, this issue is straightforward to address with the latest versions of h5py. Although I haven’t tried it personally, the SWMR documentation provides helpful guidance.
 
+Initially, combining the PyTorch DataLoader and h5py was challenging, but I found a workaround. There might be better solutions that I’m not aware of, but here’s what worked for me:
+
+In a typical PyTorch DataLoader, the HDF5 file is opened in the __init__() function and read from in __getitem__(). However, when num_workers > 1, this approach fails. The fix is to open the HDF5 file inside the __getitem__() method instead of __init__(). This resolves the issue, allowing the DataLoader to work with multiple workers.
 * Other useful resources
 
   1. [[https://discuss.pytorch.org/t/save-torch-tensors-as-hdf5/39556][In Pytorch discussion forum]]

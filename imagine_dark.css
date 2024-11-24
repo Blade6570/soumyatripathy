@@ -16,6 +16,7 @@
     /*--font-normal: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman";*/
     --font-normal: 'VT323', normal;
     --font-headings: 'Silkscreen', normal;
+    --font-subheadings: 'Nova Mono', normal;
 
     --font-size-1: 33.57px;
     --font-size-2: 26.86px;
@@ -62,7 +63,9 @@ h4{font-size: var(--font-size-4);}
 h5{font-size: var(--font-size-4);}
 
 h1 > .subtitle{
-    font-size: 21.48px;
+    font-size: 18.48px;
+    font-family: var(--font-subheadings);
+    color: black;    
 }
 
 h1{
@@ -82,6 +85,7 @@ p, pre, ol, ul, table, code{
     margin-left: 10x;
     float: right;
     width: 90%;
+    text-align: justify
 }
 
 /* Better anchor tags */

@@ -3,68 +3,23 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-12-13 Sun 17:31 -->
+<!-- 2024-11-24 Sun 13:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hdf5 file for large image datasets</title>
-<meta name="generator" content="Org mode" />
+<title>Optimizing Image Data Management in Deep Learning Workflows</title>
 <meta name="author" content="Soumya Tripathy" />
-<link rel="stylesheet" type="text/css" href="org.css" />
-<base target="_blank">
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="imagine.css" />
 </head>
 <body>
-<div id="content">
-<h1 class="title">Hdf5 file for large image datasets</h1>
-
-<div id="outline-container-orgdba5e71" class="outline-2">
-<h2 id="orgdba5e71">Introduction</h2>
-<div class="outline-text-2" id="text-orgdba5e71">
+<div id="content" class="content">
+<h1 class="title">Optimizing Image Data Management in Deep Learning Workflows
+<br />
+<span class="subtitle">Hdf5 files for large image datasets</span>
+</h1>
+<div id="outline-container-orgce25e1c" class="outline-2">
+<h2 id="orgce25e1c"><a href="#orgce25e1c">Introduction</a></h2>
+<div class="outline-text-2" id="text-orgce25e1c">
 <p>
 A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a number of tutorials on creating hdf5 files using python package <a href="http://www.h5py.org/">h5py</a>. The common approach involves the following steps:
 </p>
@@ -72,23 +27,23 @@ A simple search on <a href="https://duckduckgo.com/">duckduckgo</a> yields a num
 <ol class="org-ol">
 <li>Read the image using <a href="http://pythonware.com/products/pil/">PIL</a> package. (<i>you can use your favorite package instead of PIL</i>)</li>
 <li>Convert it to numpy array.</li>
-<li>Store in hdf5 file using <code>create_dataset</code> or you can do fancy things like <code>groups</code> and <code>subgroups</code>.</li>
+<li>Store in hdf5 file using create_dataset or you can do fancy things like groups and subgroups.</li>
 </ol>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #339CDB;">import</span> h5py
-<span style="color: #339CDB;">import</span> numpy <span style="color: #339CDB;">as</span> np
-<span style="color: #339CDB;">import</span> os
-<span style="color: #339CDB;">from</span> PIL <span style="color: #339CDB;">import</span> Image
-<span style="color: #85DDFF;">save_path</span> = <span style="color: #DB8E73;">'./numpy.hdf5'</span>
-<span style="color: #85DDFF;">img_path</span> = <span style="color: #DB8E73;">'1.jpeg'</span>
-<span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">'image size: %d bytes'</span>%os.path.getsize(img_path))
-<span style="color: #85DDFF;">hf</span> = h5py.File(save_path, <span style="color: #DB8E73;">'a'</span>) <span style="color: #579C4C;"># </span><span style="color: #579C4C;">open a hdf5 file</span>
-<span style="color: #85DDFF;">img_np</span> = np.array(Image.<span style="color: #C586C0;">open</span>(img_path))
+<pre class="src src-python"><span style="color: #531ab6;">import</span> h5py
+<span style="color: #531ab6;">import</span> numpy <span style="color: #531ab6;">as</span> np
+<span style="color: #531ab6;">import</span> os
+<span style="color: #531ab6;">from</span> PIL <span style="color: #531ab6;">import</span> Image
+<span style="color: #005e8b;">save_path</span> = <span style="color: #3548cf;">'./numpy.hdf5'</span>
+<span style="color: #005e8b;">img_path</span> = <span style="color: #3548cf;">'1.jpeg'</span>
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">'image size: %d bytes'</span>%os.path.getsize(img_path))
+<span style="color: #005e8b;">hf</span> = h5py.File(save_path, <span style="color: #3548cf;">'a'</span>) <span style="color: #595959;"># </span><span style="color: #595959;">open a hdf5 file</span>
+<span style="color: #005e8b;">img_np</span> = np.array(Image.<span style="color: #8f0075;">open</span>(img_path))
 
-<span style="color: #85DDFF;">dset</span> = hf.create_dataset(<span style="color: #DB8E73;">'default'</span>, data=img_np)  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">write the data to hdf5 file</span>
-hf.close()  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">close the hdf5 file</span>
-<span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
+<span style="color: #005e8b;">dset</span> = hf.create_dataset(<span style="color: #3548cf;">'default'</span>, data=img_np)  <span style="color: #595959;"># </span><span style="color: #595959;">write the data to hdf5 file</span>
+hf.close()  <span style="color: #595959;"># </span><span style="color: #595959;">close the hdf5 file</span>
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
 </pre>
 </div>
 
@@ -99,34 +54,33 @@ hdf5 file size: 434270 bytes
 
 
 <p>
-Although these steps are good for small datasets, the hdf5 file size increases rapidly with the number of images. I have experienced situations where the hdf5 file takes <code>100x</code> times more space than the original dataset. This solely happens because the numpy array takes more storage space than the original image files. If the server has storage space limitations then probably you can follow the steps as given below.
+While these steps work well for small datasets, the size of the HDF5 file can grow significantly as the number of images increases. In some cases, I’ve observed the HDF5 file taking up to 100 times more space than the original dataset. This occurs because NumPy arrays require more storage than the original image files. If the server has storage limitations, you may want to consider the alternative steps outlined below.
 </p>
 </div>
 </div>
-
-<div id="outline-container-org8975d86" class="outline-2">
-<h2 id="org8975d86">Modified steps</h2>
-<div class="outline-text-2" id="text-org8975d86">
-<ul class="org-ul">
+<div id="outline-container-org8e0c1df" class="outline-2">
+<h2 id="org8e0c1df"><a href="#org8e0c1df">Modified steps</a></h2>
+<div class="outline-text-2" id="text-org8e0c1df">
+<ol class="org-ol">
 <li>Read the image file as python binary file.</li>
-</ul>
+</ol>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #339CDB;">import</span> h5py
-<span style="color: #339CDB;">import</span> numpy <span style="color: #339CDB;">as</span> np
-<span style="color: #339CDB;">import</span> os
+<pre class="src src-python"><span style="color: #531ab6;">import</span> h5py
+<span style="color: #531ab6;">import</span> numpy <span style="color: #531ab6;">as</span> np
+<span style="color: #531ab6;">import</span> os
 
-<span style="color: #85DDFF;">save_path</span> = <span style="color: #DB8E73;">'./test.hdf5'</span>
-<span style="color: #85DDFF;">img_path</span> = <span style="color: #DB8E73;">'1.jpeg'</span>
-<span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">'image size: %d bytes'</span>%os.path.getsize(img_path))
-<span style="color: #85DDFF;">hf</span> = h5py.File(save_path, <span style="color: #DB8E73;">'a'</span>) <span style="color: #579C4C;"># </span><span style="color: #579C4C;">open a hdf5 file</span>
-<span style="color: #339CDB;">with</span> <span style="color: #C586C0;">open</span>(img_path, <span style="color: #DB8E73;">'rb'</span>) <span style="color: #339CDB;">as</span> img_f:
-<span style="background-color: #252526;"> </span>   <span style="background-color: #252526;"> </span><span style="color: #85DDFF;">binary_data</span> = img_f.read()      <span style="color: #579C4C;"># </span><span style="color: #579C4C;">read the image as python binary</span>
+<span style="color: #005e8b;">save_path</span> = <span style="color: #3548cf;">'./test.hdf5'</span>
+<span style="color: #005e8b;">img_path</span> = <span style="color: #3548cf;">'1.jpeg'</span>
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">'image size: %d bytes'</span>%os.path.getsize(img_path))
+<span style="color: #005e8b;">hf</span> = h5py.File(save_path, <span style="color: #3548cf;">'a'</span>) <span style="color: #595959;"># </span><span style="color: #595959;">open a hdf5 file</span>
+<span style="color: #531ab6;">with</span> <span style="color: #8f0075;">open</span>(img_path, <span style="color: #3548cf;">'rb'</span>) <span style="color: #531ab6;">as</span> img_f:
+     <span style="color: #005e8b;">binary_data</span> = img_f.read()      <span style="color: #595959;"># </span><span style="color: #595959;">read the image as python binary</span>
 
-<span style="color: #85DDFF;">binary_data_np</span> = np.asarray(binary_data)
-<span style="color: #85DDFF;">dset</span> = hf.create_dataset(<span style="color: #DB8E73;">'default'</span>, data=binary_data_np)  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">write the data to hdf5 file</span>
-hf.close()  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">close the hdf5 file</span>
-<span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
+<span style="color: #005e8b;">binary_data_np</span> = np.asarray(binary_data)
+<span style="color: #005e8b;">dset</span> = hf.create_dataset(<span style="color: #3548cf;">'default'</span>, data=binary_data_np)  <span style="color: #595959;"># </span><span style="color: #595959;">write the data to hdf5 file</span>
+hf.close()  <span style="color: #595959;"># </span><span style="color: #595959;">close the hdf5 file</span>
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">'hdf5 file size: %d bytes'</span>%os.path.getsize(save_path))
 </pre>
 </div>
 
@@ -136,27 +90,27 @@ hdf5 file size: 26034 bytes
 </pre>
 
 
-<ul class="org-ul">
-<li>In order to read back the image as numpy array use the following snippet.</li>
-</ul>
+<ol class="org-ol">
+<li value="2">In order to read back the image as numpy array use the following snippet.</li>
+</ol>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #339CDB;">import</span> h5py
-<span style="color: #339CDB;">import</span> numpy <span style="color: #339CDB;">as</span> np
-<span style="color: #339CDB;">import</span> io
-<span style="color: #339CDB;">from</span> PIL <span style="color: #339CDB;">import</span> Image
+<pre class="src src-python"><span style="color: #531ab6;">import</span> h5py
+<span style="color: #531ab6;">import</span> numpy <span style="color: #531ab6;">as</span> np
+<span style="color: #531ab6;">import</span> io
+<span style="color: #531ab6;">from</span> PIL <span style="color: #531ab6;">import</span> Image
 
-<span style="color: #85DDFF;">hdf5_file</span> = <span style="color: #DB8E73;">'./test.hdf5'</span>
+<span style="color: #005e8b;">hdf5_file</span> = <span style="color: #3548cf;">'./test.hdf5'</span>
 
-<span style="color: #85DDFF;">hf</span> = h5py.File(hdf5_file, <span style="color: #DB8E73;">'r'</span>) <span style="color: #579C4C;"># </span><span style="color: #579C4C;">open a hdf5 file</span>
+<span style="color: #005e8b;">hf</span> = h5py.File(hdf5_file, <span style="color: #3548cf;">'r'</span>) <span style="color: #595959;"># </span><span style="color: #595959;">open a hdf5 file</span>
 
-<span style="color: #85DDFF;">key</span> = <span style="color: #C586C0;">list</span>(hf.keys())[0]
-<span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">"Keys: %s"</span> % key)
+<span style="color: #005e8b;">key</span> = <span style="color: #8f0075;">list</span>(hf.keys())[0]
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">"Keys: %s"</span> % key)
 
-<span style="color: #85DDFF;">data</span> = np.array(hf[key])   <span style="color: #579C4C;"># </span><span style="color: #579C4C;">write the data to hdf5 file</span>
-<span style="color: #85DDFF;">img</span> = Image.<span style="color: #C586C0;">open</span>(io.BytesIO(data))
-<span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">'image size:'</span>, img.size)
-hf.close()  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">close the hdf5 file</span>
+<span style="color: #005e8b;">data</span> = np.array(hf[key])   <span style="color: #595959;"># </span><span style="color: #595959;">write the data to hdf5 file</span>
+<span style="color: #005e8b;">img</span> = Image.<span style="color: #8f0075;">open</span>(io.BytesIO(data))
+<span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">'image size:'</span>, img.size)
+hf.close()  <span style="color: #595959;"># </span><span style="color: #595959;">close the hdf5 file</span>
 img.show()
 </pre>
 </div>
@@ -167,109 +121,125 @@ image size: (502, 287)
 </pre>
 
 
-<ul class="org-ul">
-<li>Now it is clear that the modified steps consume less storage space and also recovers the image as required.</li>
-</ul>
+<p>
+Now it is clear that the modified steps consume less storage space and also recovers the image as required.
+</p>
 </div>
 </div>
-
-<div id="outline-container-org7e8e663" class="outline-2">
-<h2 id="org7e8e663">A practical example</h2>
-<div class="outline-text-2" id="text-org7e8e663">
+<div id="outline-container-org599a9b3" class="outline-2">
+<h2 id="org599a9b3"><a href="#org599a9b3">A practical example</a></h2>
+<div class="outline-text-2" id="text-org599a9b3">
 <p>
 Consider the following file structure. I  have many such As' in my dataset.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-ditaa">|
+*
+A
+*
+|
+|
+*---a
+    |
+    *---b.png
+    |
+    *---c.png
+    |
 
-<div class="figure">
-<p><img src="tree.png" alt="tree.png" />
-</p>
+</pre>
 </div>
 
-<ul class="org-ul">
-<li>I have to figure it out to store the images in to a <b>hdf5</b> file but somehow need to retrieve the file structure. In this way I can load the images from hdf5 file with their paths.</li>
-
-<li>The following steps are mostly tailored to address my requirements, but these components can be customized to address other scenarios.</li>
-</ul>
+<p>
+I need to determine how to store images in an HDF5 file while preserving the file structure. This approach will allow me to load images from the HDF5 file along with their respective paths. The following steps are specifically designed to meet my requirements but can be customized to suit other use cases.
+</p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #339CDB;">import</span> h5py
-<span style="color: #339CDB;">import</span> numpy <span style="color: #339CDB;">as</span> np
-<span style="color: #339CDB;">import</span> os
+<pre class="src src-python"><span style="color: #531ab6;">import</span> h5py
+<span style="color: #531ab6;">import</span> numpy <span style="color: #531ab6;">as</span> np
+<span style="color: #531ab6;">import</span> os
 
-<span style="color: #85DDFF;">base_path</span> = <span style="color: #DB8E73;">'./'</span>  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">dataset path</span>
+<span style="color: #005e8b;">base_path</span> = <span style="color: #3548cf;">'./'</span>  <span style="color: #595959;"># </span><span style="color: #595959;">dataset path</span>
 
-<span style="color: #85DDFF;">save_path</span> = <span style="color: #DB8E73;">'./test.hdf5'</span>  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">path to save the hdf5 file</span>
+<span style="color: #005e8b;">save_path</span> = <span style="color: #3548cf;">'./test.hdf5'</span>  <span style="color: #595959;"># </span><span style="color: #595959;">path to save the hdf5 file</span>
 
-<span style="color: #85DDFF;">hf</span> = h5py.File(save_path, <span style="color: #DB8E73;">'a'</span>)  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">open the file in append mode</span>
+<span style="color: #005e8b;">hf</span> = h5py.File(save_path, <span style="color: #3548cf;">'a'</span>)  <span style="color: #595959;"># </span><span style="color: #595959;">open the file in append mode</span>
 
-<span style="color: #339CDB;">for</span> i <span style="color: #339CDB;">in</span> os.listdir(base_path):   <span style="color: #579C4C;"># </span><span style="color: #579C4C;">read all the As'</span>
-<span style="background-color: #252526;"> </span>   <span style="color: #85DDFF;">vid_name</span> = os.path.join(base_path, i)
-<span style="background-color: #252526;"> </span>   <span style="color: #85DDFF;">grp</span> = hf.create_group(vid_name)  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">create a hdf5 group.  each group is one 'A'</span>
+<span style="color: #531ab6;">for</span> i <span style="color: #531ab6;">in</span> os.listdir(base_path):   <span style="color: #595959;"># </span><span style="color: #595959;">read all the As'</span>
+    <span style="color: #005e8b;">vid_name</span> = os.path.join(base_path, i)
+    <span style="color: #005e8b;">grp</span> = hf.create_group(vid_name)  <span style="color: #595959;"># </span><span style="color: #595959;">create a hdf5 group.  each group is one 'A'</span>
 
-<span style="background-color: #252526;"> </span>   <span style="color: #339CDB;">for</span> j <span style="color: #339CDB;">in</span> os.listdir(vid_name):  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">read all as' inside A</span>
-        <span style="color: #85DDFF;">track</span> = os.path.join(vid_name, j)
+    <span style="color: #531ab6;">for</span> j <span style="color: #531ab6;">in</span> os.listdir(vid_name):  <span style="color: #595959;"># </span><span style="color: #595959;">read all as' inside A</span>
+  <span style="color: #005e8b;">track</span> = os.path.join(vid_name, j)
 
-        <span style="color: #85DDFF;">subgrp</span> = grp.create_group(j)  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">create a subgroup for the above created group. each small</span>
-                                      <span style="color: #579C4C;"># </span><span style="color: #579C4C;">a is one subgroup</span>
+  <span style="color: #005e8b;">subgrp</span> = grp.create_group(j)  <span style="color: #595959;"># </span><span style="color: #595959;">create a subgroup for the above created group. each small</span>
+                                <span style="color: #595959;"># </span><span style="color: #595959;">a is one subgroup</span>
 
-        <span style="color: #339CDB;">for</span> k <span style="color: #339CDB;">in</span> os.listdir(track):   <span style="color: #579C4C;"># </span><span style="color: #579C4C;">find all images inside a.</span>
-            <span style="color: #85DDFF;">img_path</span> = os.path.join(track, k)
+  <span style="color: #531ab6;">for</span> k <span style="color: #531ab6;">in</span> os.listdir(track):   <span style="color: #595959;"># </span><span style="color: #595959;">find all images inside a.</span>
+      <span style="color: #005e8b;">img_path</span> = os.path.join(track, k)
 
-            <span style="color: #339CDB;">with</span> <span style="color: #C586C0;">open</span>(img_path, <span style="color: #DB8E73;">'rb'</span>) <span style="color: #339CDB;">as</span> img_f:  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">open images as python binary</span>
-                <span style="color: #85DDFF;">binary_data</span> = img_f.read()
+      <span style="color: #531ab6;">with</span> <span style="color: #8f0075;">open</span>(img_path, <span style="color: #3548cf;">'rb'</span>) <span style="color: #531ab6;">as</span> img_f:  <span style="color: #595959;"># </span><span style="color: #595959;">open images as python binary</span>
+    <span style="color: #005e8b;">binary_data</span> = img_f.read()
 
-            <span style="color: #85DDFF;">binary_data_np</span> = np.asarray(binary_data)
+      <span style="color: #005e8b;">binary_data_np</span> = np.asarray(binary_data)
 
-            <span style="color: #85DDFF;">dset</span> = subgrp.create_dataset(k, data=binary_data_np) <span style="color: #579C4C;"># </span><span style="color: #579C4C;">save it in the subgroup. each a-subgroup contains all the images.</span>
+      <span style="color: #005e8b;">dset</span> = subgrp.create_dataset(k, data=binary_data_np) <span style="color: #595959;"># </span><span style="color: #595959;">save it in the subgroup.</span>
+                                                           <span style="color: #595959;">#</span><span style="color: #595959;">each subgroup contains all the images.</span>
 
 hf.close()
 
 </pre>
 </div>
 
-<ul class="org-ul">
-<li>The question is how to get the names of all the groups and subgroups from the hdf5 file? The h5py package has features like <code>visititems</code> to help us access back the image files. Lets see the following steps in continuation to the above steps:</li>
-</ul>
+<p>
+The question is: how can we retrieve the names of all the groups and subgroups from an HDF5 file? The <b>h5py</b> package provides useful features, such as "visititems," to help access the stored image files. Let’s explore the following steps as a continuation of the previous ones.
+</p>
 
 <div class="org-src-container">
 <pre class="src src-python">
-<span style="color: #85DDFF;">data</span> = []  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. These are basically keys to access our image data.</span>
+<span style="color: #005e8b;">data</span> = []  <span style="color: #595959;"># </span><span style="color: #595959;">list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. </span>
+           <span style="color: #595959;">#</span><span style="color: #595959;">These are basically keys to access our image data.</span>
 
-<span style="color: #85DDFF;">group</span> = [] <span style="color: #579C4C;"># </span><span style="color: #579C4C;">list all groups and subgroups in hdf5 file</span>
+<span style="color: #005e8b;">group</span> = [] <span style="color: #595959;"># </span><span style="color: #595959;">list all groups and subgroups in hdf5 file</span>
 
-<span style="color: #339CDB;">def</span> <span style="color: #D9DAA2;">func</span>(name, obj):     <span style="color: #579C4C;"># </span><span style="color: #579C4C;">function to recursively store all the keys</span>
-<span style="background-color: #252526;"> </span>   <span style="color: #339CDB;">if</span> <span style="color: #C586C0;">isinstance</span>(obj, h5py.Dataset):
-        data1.append(name)
-<span style="background-color: #252526;"> </span>   <span style="color: #339CDB;">elif</span> <span style="color: #C586C0;">isinstance</span>(obj, h5py.Group):
-        group1.append(name)
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">func</span>(name, obj):     <span style="color: #595959;"># </span><span style="color: #595959;">function to recursively store all the keys</span>
+    <span style="color: #531ab6;">if</span> <span style="color: #8f0075;">isinstance</span>(obj, h5py.Dataset):
+  data1.append(name)
+    <span style="color: #531ab6;">elif</span> <span style="color: #8f0075;">isinstance</span>(obj, h5py.Group):
+  group1.append(name)
 
-<span style="color: #85DDFF;">hf</span> = h5py.File(save_path, <span style="color: #DB8E73;">'r'</span>)
-hf.visititems(func)  <span style="color: #579C4C;"># </span><span style="color: #579C4C;">this is the operation we are talking about.</span>
+<span style="color: #005e8b;">hf</span> = h5py.File(save_path, <span style="color: #3548cf;">'r'</span>)
+hf.visititems(func)  <span style="color: #595959;"># </span><span style="color: #595959;">this is the operation we are talking about.</span>
 
-<span style="color: #579C4C;"># </span><span style="color: #579C4C;">Now lets read the image files in their proper format to use it for our training.</span>
+<span style="color: #595959;"># </span><span style="color: #595959;">Now lets read the image files in their proper format to use it for our training.</span>
 
-<span style="color: #339CDB;">for</span> j <span style="color: #339CDB;">in</span> data:
-<span style="background-color: #252526;"> </span>   <span style="color: #85DDFF;">kk</span> = np.array(hf[j])
-<span style="background-color: #252526;"> </span>   <span style="color: #85DDFF;">img</span> = Image.<span style="color: #C586C0;">open</span>(io.BytesIO(kk)) <span style="color: #579C4C;"># </span><span style="color: #579C4C;">our image file</span>
-<span style="background-color: #252526;"> </span>   <span style="color: #339CDB;">print</span>(<span style="color: #DB8E73;">'image size:'</span>, img.size)
+<span style="color: #531ab6;">for</span> j <span style="color: #531ab6;">in</span> data:
+    <span style="color: #005e8b;">kk</span> = np.array(hf[j])
+    <span style="color: #005e8b;">img</span> = Image.<span style="color: #8f0075;">open</span>(io.BytesIO(kk)) <span style="color: #595959;"># </span><span style="color: #595959;">our image file</span>
+    <span style="color: #8f0075;">print</span>(<span style="color: #3548cf;">'image size:'</span>, img.size)
 </pre>
 </div>
 </div>
 </div>
+<div id="outline-container-org78832ed" class="outline-2">
+<h2 id="org78832ed"><a href="#org78832ed">Some issues [Solved]</a></h2>
+<div class="outline-text-2" id="text-org78832ed">
+<p>
+In PyTorch, I’ve noticed that parallel reading (using num_workers &gt; 1 in the DataLoader) doesn’t work seamlessly when dealing with HDF5 files. However, this issue is straightforward to address with the latest versions of h5py. Although I haven’t tried it personally, the SWMR documentation provides helpful guidance.
+</p>
 
-<div id="outline-container-orgc76c0fe" class="outline-2">
-<h2 id="orgc76c0fe">Some issues [Solved]</h2>
-<div class="outline-text-2" id="text-orgc76c0fe">
-<ul class="org-ul">
-<li>In Pytorch I have noticed that parallel reading doesn't work (number of workers &gt; 1 in dataloader). <del>However, the issue is simple to solve in the latest versions of h5py. I have not tried by myself but these links can help: <a href="http://docs.h5py.org/en/stable/swmr.html">SWMR</a></del>. Combining Pytorch dataloader and h5py was bit problematic but found a fix for that. There may be better solution that I am not aware of. In usual pytorch dataloader, I open the hdf5 file in the <code>__init__()</code> function and then read from them in <code>__getitem__()</code>. However in the case of <b>num of workers &gt; 1</b> it fails. So the fix is to open the hdf5 file inside the <code>__getitem__()</code> instead of <code>__init__()</code>. It solves the problem and runs with multiple number of workers.</li>
-</ul>
+<p>
+Initially, combining the PyTorch DataLoader and h5py was challenging, but I found a workaround. There might be better solutions that I’m not aware of, but here’s what worked for me:
+</p>
+
+<p>
+In a typical PyTorch DataLoader, the HDF5 file is opened in the __init__() function and read from in __getitem__(). However, when num_workers &gt; 1, this approach fails. The fix is to open the HDF5 file inside the __getitem__() method instead of __init__(). This resolves the issue, allowing the DataLoader to work with multiple workers.
+</p>
 </div>
 </div>
-
-<div id="outline-container-orgb29d29c" class="outline-2">
-<h2 id="orgb29d29c">Other useful resources</h2>
-<div class="outline-text-2" id="text-orgb29d29c">
+<div id="outline-container-org79ddd22" class="outline-2">
+<h2 id="org79ddd22"><a href="#org79ddd22">Other useful resources</a></h2>
+<div class="outline-text-2" id="text-org79ddd22">
 <ol class="org-ol">
 <li><a href="https://discuss.pytorch.org/t/save-torch-tensors-as-hdf5/39556">In Pytorch discussion forum</a></li>
 </ol>
@@ -278,8 +248,8 @@ hf.visititems(func)  <span style="color: #579C4C;"># </span><span style="color: 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Soumya Tripathy</p>
-<p class="date">Created: 2020-12-13 Sun 17:31</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2024-11-24 Sun 13:18</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
