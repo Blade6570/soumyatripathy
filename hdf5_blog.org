@@ -13,19 +13,20 @@ A simple search on [[https://duckduckgo.com/][duckduckgo]] yields a number of tu
       3) Store in hdf5 file using create_dataset or you can do fancy things like groups and subgroups.
 
 #+BEGIN_SRC python :results output :exports both :eval no
-import h5py
-import numpy as np
-import os
-from PIL import Image
-save_path = './numpy.hdf5'
-img_path = '1.jpeg'
-print('image size: %d bytes'%os.path.getsize(img_path))
-hf = h5py.File(save_path, 'a') # open a hdf5 file
-img_np = np.array(Image.open(img_path))
+  import h5py
+  import numpy as np
+  import os
+  from PIL import Image
+  save_path = './numpy.hdf5'
+  img_path = '1.jpeg'
+  print('image size: %d bytes'%os.path.getsize(img_path))
+  hf = h5py.File(save_path, 'a') # open a hdf5 file
+  img_np = np.array(Image.open(img_path))
 
-dset = hf.create_dataset('default', data=img_np)  # write the data to hdf5 file
-hf.close()  # close the hdf5 file
-print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
+  dset = hf.create_dataset('default', data=img_np)  # write the data to hdf5 file
+  hf.close()  # close the hdf5 file
+  
+  print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 #+END_SRC
 
 #+RESULTS:
@@ -39,21 +40,22 @@ While these steps work well for small datasets, the size of the HDF5 file can gr
 1. Read the image file as python binary file.
 
 #+BEGIN_SRC python :results output :exports both :eval no
-import h5py
-import numpy as np
-import os
+  import h5py
+  import numpy as np
+  import os
 
-save_path = './test.hdf5'
-img_path = '1.jpeg'
-print('image size: %d bytes'%os.path.getsize(img_path))
-hf = h5py.File(save_path, 'a') # open a hdf5 file
-with open(img_path, 'rb') as img_f:
-     binary_data = img_f.read()      # read the image as python binary
+  save_path = './test.hdf5'
+  img_path = '1.jpeg'
+  print('image size: %d bytes'%os.path.getsize(img_path))
+  hf = h5py.File(save_path, 'a') # open a hdf5 file
+  with open(img_path, 'rb') as img_f:
+       binary_data = img_f.read()      # read the image as python binary
 
-binary_data_np = np.asarray(binary_data)
-dset = hf.create_dataset('default', data=binary_data_np)  # write the data to hdf5 file
-hf.close()  # close the hdf5 file
-print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
+  binary_data_np = np.asarray(binary_data)
+  dset = hf.create_dataset('default', data=binary_data_np)  # write the data to hdf5 file
+  hf.close()  # close the hdf5 file
+  
+  print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 #+END_SRC
 
 #+RESULTS:
@@ -63,23 +65,24 @@ print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 2. [@2] In order to read back the image as numpy array use the following snippet.
 
 #+BEGIN_SRC python :results output :exports both :eval no
-import h5py
-import numpy as np
-import io
-from PIL import Image
+  import h5py
+  import numpy as np
+  import io
+  from PIL import Image
 
-hdf5_file = './test.hdf5'
+  hdf5_file = './test.hdf5'
 
-hf = h5py.File(hdf5_file, 'r') # open a hdf5 file
+  hf = h5py.File(hdf5_file, 'r') # open a hdf5 file
 
-key = list(hf.keys())[0]
-print("Keys: %s" % key)
+  key = list(hf.keys())[0]
+  print("Keys: %s" % key)
 
-data = np.array(hf[key])   # write the data to hdf5 file
-img = Image.open(io.BytesIO(data))
-print('image size:', img.size)
-hf.close()  # close the hdf5 file
-img.show()
+  data = np.array(hf[key])   # write the data to hdf5 file
+  img = Image.open(io.BytesIO(data))
+  print('image size:', img.size)
+  hf.close()  # close the hdf5 file
+  
+  img.show()
 #+END_SRC
 
 #+RESULTS:
@@ -114,6 +117,7 @@ A
 I need to determine how to store images in an HDF5 file while preserving the file structure. This approach will allow me to load images from the HDF5 file along with their respective paths. The following steps are specifically designed to meet my requirements but can be customized to suit other use cases.
 
 #+BEGIN_SRC python
+
   import h5py
   import numpy as np
   import os
@@ -127,23 +131,19 @@ I need to determine how to store images in an HDF5 file while preserving the fil
   for i in os.listdir(base_path):   # read all the As'
       vid_name = os.path.join(base_path, i)
       grp = hf.create_group(vid_name)  # create a hdf5 group.  each group is one 'A'
-
+      
       for j in os.listdir(vid_name):  # read all as' inside A
-  	track = os.path.join(vid_name, j)
-
-  	subgrp = grp.create_group(j)  # create a subgroup for the above created group. each small
-  	                              # a is one subgroup
+          track = os.path.join(vid_name, j)
+          subgrp = grp.create_group(j)  # create a subgroup for the above created group. each small a is one subgroup
 
   	for k in os.listdir(track):   # find all images inside a.
   	    img_path = os.path.join(track, k)
-
+              
   	    with open(img_path, 'rb') as img_f:  # open images as python binary
-  		binary_data = img_f.read()
-
+                binary_data = img_f.read()
+                  
   	    binary_data_np = np.asarray(binary_data)
-
-  	    dset = subgrp.create_dataset(k, data=binary_data_np) # save it in the subgroup.
-                                                             #each subgroup contains all the images.
+  	    dset = subgrp.create_dataset(k, data=binary_data_np) # each subgroup contains all the images.
 
   hf.close()
 
@@ -153,8 +153,7 @@ The question is: how can we retrieve the names of all the groups and subgroups f
 
 #+BEGIN_SRC python
 
-  data = []  # list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. 
-             #These are basically keys to access our image data.
+  data = []  # list all images files full path 'group/subgroup/b.png' for e.g. ./A/a/b.png. These are basically keys to access our image data.
 
   group = [] # list all groups and subgroups in hdf5 file
 
@@ -181,7 +180,8 @@ In PyTorch, I’ve noticed that parallel reading (using num_workers > 1 in the D
 
 Initially, combining the PyTorch DataLoader and h5py was challenging, but I found a workaround. There might be better solutions that I’m not aware of, but here’s what worked for me:
 
-In a typical PyTorch DataLoader, the HDF5 file is opened in the __init__() function and read from in __getitem__(). However, when num_workers > 1, this approach fails. The fix is to open the HDF5 file inside the __getitem__() method instead of __init__(). This resolves the issue, allowing the DataLoader to work with multiple workers.
+In a typical PyTorch DataLoader, the HDF5 file is opened in the /__init__()/ function and read from in /__getitem__()/. However, when num_workers > 1, this approach fails. The fix is to open the HDF5 file inside the /__getitem__()/ method instead of /__init__()/. This resolves the issue, allowing the DataLoader to work with multiple workers.
+
 * Other useful resources
 
   1. [[https://discuss.pytorch.org/t/save-torch-tensors-as-hdf5/39556][In Pytorch discussion forum]]

@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Silkscreen');
-@import url('https://fonts.googleapis.com/css?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css?family=VT323:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Code+Latin:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@900&display=swap');
 /* Variables. Feel free to edit these! */
 :root {
     --color-primary: #028090;
@@ -14,14 +16,14 @@
     --color-special-todo: #790604;
 
     /*--font-normal: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman";*/
-    --font-normal: 'VT323', normal;
-    --font-headings: 'Silkscreen', normal;
-    --font-subheadings: 'Nova Mono', normal;
+    --font-normal: 'M PLUS Code Latin', normal;
+    --font-headings: 'M PLUS Code Latin', normal;
+    --font-subheadings: 'M PLUS Code Latin', normal;
 
     --font-size-1: 33.57px;
     --font-size-2: 26.86px;
     --font-size-3: 21.48px;
-    --font-size-4: 25.19px;
+    --font-size-4: 19.19px;
 
     --font-size-small: 18px;
 }
@@ -49,6 +51,7 @@ h2, h3, h4, h5, h6{
     width: 90%;
     margin-left: 10x;
     padding: 10x;
+    margin-bottom: 0;
     color: inherit;
     text-decoration: none;
     font-family: var(--font-headings)
@@ -84,6 +87,7 @@ p, pre, ol, ul, table, code{
     font-family: var(--font-normal);
     margin-left: 10x;
     float: right;
+    line-height: 1.5;
     width: 90%;
 
 }
@@ -109,7 +113,7 @@ a:hover{
 }
 
 .title{
-   padding: 2vh 9vw;
+    padding: 1vh 10vw;
 }
 
 
@@ -121,7 +125,7 @@ img{
 
 /* Responsive code blocks and tables
 pre, .outline-text-2, .outline-text-3, outline-text-4{
-    max-width: 100%;
+    max-width: 89%;
     overflow-x: auto;
 }*/
 
