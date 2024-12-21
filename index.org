@@ -16,11 +16,12 @@
 [[file:glasses.jpg][file:press_release_photo.jpg]]
 
 
+
 * Namaste,
 
-I am a Senior Algorithm Engineer in the Camera Lab at Huawei Technologies Finland, where I focus on generative AI for low-level vision applications in mobile cameras. I hold a Doctor of Science degree (with distinction) in Computing and Electrical Engineering from  [[http://www.tuni.fi/en][Tampere University]]. During my doctoral studies, I had the privilege of working under the guidance of [[http://esa.rahtu.fi/][Esa Rahtu]] from Tampere University and Professor [[https://users.aalto.fi/~kannalj1/][Juho Kannala]] from [[http://www.aalto.fi/en/][Aalto University]].
+I am a Senior Algorithm Engineer in the Camera Lab at Huawei Technologies Finland, where I focus on generative AI for low-level vision applications in mobile cameras. I hold a Doctor of Science degree (with distinction) in Computing and Electrical Engineering from  [[http://www.tuni.fi/en][T
+ampere University]]. During my doctoral studies, I had the privilege of working under the guidance of [[http://esa.rahtu.fi/][Esa Rahtu]] from Tampere University and Professor [[https://users.aalto.fi/~kannalj1/][Juho Kannala]] from [[http://www.aalto.fi/en/][Aalto University]].
 Before moving to Finland, I worked as a Researcher at [[https://www.tcs.com/research-and-innovation][Tata Consultancy Services (TCS) Innovation and Research]], specializing in sensor signal processing. I  earned my Master’s degree in Electronics and Communication Engineering from the [[https://www.iitbbs.ac.in/][Indian Institute of Technology (IIT) Bhubaneswar]] where I conducted my master thesis on signal processing under the supervision of the Professor [[https://scholar.google.co.in/citations?user=ooCsX-UAAAAJ&hl=en][Ganapati Panda]].
-
 
 * Find more about me
 

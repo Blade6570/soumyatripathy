@@ -1,16 +1,12 @@
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="imagine.css" />
-#+OPTIONS: toc:nil num:nil html-style:nil
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 #+OPTIONS: ^:nil
+#+OPTIONS: num:nil
 #+TITLE: Optimizing Image Data Management in Deep Learning Workflows
 #+SUBTITLE: Hdf5 files for large image datasets
 
 * Introduction
 
-A simple search on [[https://duckduckgo.com/][duckduckgo]] yields a number of tutorials on creating hdf5 files using python package [[http://www.h5py.org/][h5py]]. The common approach involves the following steps:
-
-      1) Read the image using [[http://pythonware.com/products/pil/][PIL]] package. (/you can use your favorite package instead of PIL/)
-      2) Convert it to numpy array.
-      3) Store in hdf5 file using create_dataset or you can do fancy things like groups and subgroups.
+A simple search on [[https://duckduckgo.com/][duckduckgo]] yields a number of tutorials on creating hdf5 files using python package [[http://www.h5py.org/][h5py]]. The common approach involves the following steps: 1. Read the image using [[http://pythonware.com/products/pil/][PIL]] package (you can use your favorite package instead of PIL), 2. Convert it to numpy array and, 3. Store in hdf5 file using create_dataset or you can do fancy things like groups and subgroups.
 
 #+BEGIN_SRC python :results output :exports both :eval no
   import h5py
@@ -25,7 +21,6 @@ A simple search on [[https://duckduckgo.com/][duckduckgo]] yields a number of tu
 
   dset = hf.create_dataset('default', data=img_np)  # write the data to hdf5 file
   hf.close()  # close the hdf5 file
-  
   print('hdf5 file size: %d bytes'%os.path.getsize(save_path))
 #+END_SRC
 
@@ -37,8 +32,7 @@ While these steps work well for small datasets, the size of the HDF5 file can gr
 
 * Modified steps
 
-1. Read the image file as python binary file.
-
+   Read the image file as python binary file and  to read back the image as numpy array. The following scripts will help you to achieve this.
 #+BEGIN_SRC python :results output :exports both :eval no
   import h5py
   import numpy as np
@@ -62,9 +56,10 @@ While these steps work well for small datasets, the size of the HDF5 file can gr
 : image size: 23986 bytes
 : hdf5 file size: 26034 bytes
 
-2. [@2] In order to read back the image as numpy array use the following snippet.
+
 
 #+BEGIN_SRC python :results output :exports both :eval no
+  
   import h5py
   import numpy as np
   import io
@@ -81,7 +76,7 @@ While these steps work well for small datasets, the size of the HDF5 file can gr
   img = Image.open(io.BytesIO(data))
   print('image size:', img.size)
   hf.close()  # close the hdf5 file
-  
+
   img.show()
 #+END_SRC
 
@@ -174,13 +169,9 @@ The question is: how can we retrieve the names of all the groups and subgroups f
       print('image size:', img.size)
 #+END_SRC
 
-* Some issues [Solved]
+* Some issues and the fix
 
-In PyTorch, I’ve noticed that parallel reading (using num_workers > 1 in the DataLoader) doesn’t work seamlessly when dealing with HDF5 files. However, this issue is straightforward to address with the latest versions of h5py. Although I haven’t tried it personally, the SWMR documentation provides helpful guidance.
-
-Initially, combining the PyTorch DataLoader and h5py was challenging, but I found a workaround. There might be better solutions that I’m not aware of, but here’s what worked for me:
-
-In a typical PyTorch DataLoader, the HDF5 file is opened in the /__init__()/ function and read from in /__getitem__()/. However, when num_workers > 1, this approach fails. The fix is to open the HDF5 file inside the /__getitem__()/ method instead of /__init__()/. This resolves the issue, allowing the DataLoader to work with multiple workers.
+In PyTorch, I’ve noticed that parallel reading (using num_workers > 1 in the DataLoader) doesn’t work seamlessly when dealing with HDF5 files. However, this issue is straightforward to address with the latest versions of h5py. Although I haven’t tried it personally, the SWMR documentation provides helpful guidance. Initially, combining the PyTorch DataLoader and h5py was challenging, but I found a workaround. There might be better solutions that I’m not aware of, but here’s what worked for me: In a typical PyTorch DataLoader, the HDF5 file is opened in the /__init__()/ function and read from in /__getitem__()/. However, when num_workers > 1, this approach fails. The fix is to open the HDF5 file inside the /__getitem__()/ method instead of /__init__()/. This resolves the issue, allowing the DataLoader to work with multiple workers.
 
 * Other useful resources
 
